@@ -1,4 +1,6 @@
-import { ScrollView, View, Text, RefreshControl } from 'react-native';
+import { useEffect } from 'react';
+import { ScrollView, View, Text, RefreshControl, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuthStore } from '@/lib/auth-store';
 import { useDashboard } from '@/hooks/use-dashboard';
@@ -9,8 +11,15 @@ import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 
 export default function HomeScreen() {
-  const { user, studentId } = useAuthStore();
+  const router = useRouter();
+  const { user, studentId, setStudentMeta } = useAuthStore();
   const { data, loading, error, refetch } = useDashboard(studentId);
+
+  useEffect(() => {
+    if (data?.student?.classId && data?.session?.id && user?.branchId) {
+      setStudentMeta(data.student.classId, '', data.session.id);
+    }
+  }, [data?.student?.classId, data?.session?.id]);
 
   if (loading && !data) return <Loading fullScreen message="Loading dashboard..." />;
   if (error && !data) return <ErrorView message={error} onRetry={refetch} />;
@@ -137,6 +146,33 @@ export default function HomeScreen() {
               </View>
             </Card>
           )}
+          {/* Quick Access */}
+          <View>
+            <Text className="text-sm font-semibold text-slate-700 mb-2 px-1">Quick Access</Text>
+            <View className="flex-row gap-3">
+              <TouchableOpacity
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                onPress={() => router.push('/(app)/homework')}
+              >
+                <Text className="text-3xl">📚</Text>
+                <Text className="text-xs font-semibold text-slate-700">Homework</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                onPress={() => router.push('/(app)/timetable')}
+              >
+                <Text className="text-3xl">🗓️</Text>
+                <Text className="text-xs font-semibold text-slate-700">Timetable</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                onPress={() => router.push('/(app)/leaves')}
+              >
+                <Text className="text-3xl">📝</Text>
+                <Text className="text-xs font-semibold text-slate-700">Leaves</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

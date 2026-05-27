@@ -23,6 +23,7 @@ export interface DashboardData {
     id: string;
     name: string;
     admissionNumber: string;
+    classId?: string;
     className: string | null;
     rollNumber: string | null;
   };
@@ -161,4 +162,33 @@ export interface ApiResponse<T> {
   data: T;
   meta?: { total: number; page: number; limit: number; totalPages: number };
   error: string | null;
+}
+
+export interface HomeworkItem {
+  _id: string;
+  classId: string;
+  sectionId?: string;
+  branchId: string;
+  subjectName: string;
+  title: string;
+  description: string;
+  dueDate: string;
+  maxMarks?: number;
+  isGraded: boolean;
+  status: string;
+}
+
+export interface TimetablePeriod {
+  periodNumber: number;
+  subject: string;
+  teacherId?: string;
+  teacherName?: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface TimetableDay {
+  _id: string | null;
+  day: string;
+  periods: TimetablePeriod[];
 }

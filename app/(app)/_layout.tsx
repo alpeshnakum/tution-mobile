@@ -64,6 +64,14 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
+        name="homework"
+        options={{ href: null, title: 'Homework' }}
+      />
+      <Tabs.Screen
+        name="timetable"
+        options={{ href: null, title: 'Timetable' }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
