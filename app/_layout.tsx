@@ -9,7 +9,7 @@ export default function RootLayout() {
   const { isLoading, isAuthenticated, loadFromStorage } = useAuthStore();
 
   useEffect(() => {
-    loadFromStorage();
+    loadFromStorage().catch(() => {});
   }, []);
 
   if (isLoading) {

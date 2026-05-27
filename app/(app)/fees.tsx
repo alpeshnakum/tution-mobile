@@ -22,6 +22,16 @@ export default function FeesScreen() {
   if (loading && !data) return <Loading fullScreen message="Loading fees..." />;
   if (error && !data) return <ErrorView message={error} onRetry={refetch} />;
 
+  if (!studentId) return (
+    <SafeAreaView className="flex-1 bg-slate-50">
+      <ScreenHeader title="Fee Details" />
+      <View className="flex-1 items-center justify-center gap-3">
+        <Text className="text-4xl">💳</Text>
+        <Text className="text-slate-500 text-base">No student selected</Text>
+      </View>
+    </SafeAreaView>
+  );
+
   return (
     <SafeAreaView className="flex-1 bg-slate-50">
       <ScreenHeader
@@ -64,7 +74,7 @@ export default function FeesScreen() {
           )}
 
           {/* Installments */}
-          {data?.installments.map((inst) => (
+          {(data?.installments ?? []).map((inst) => (
             <Card key={inst.number}>
               <View className="flex-row items-center justify-between mb-3">
                 <Text className="text-sm font-semibold text-slate-900 flex-1">{inst.label}</Text>

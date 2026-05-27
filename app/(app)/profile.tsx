@@ -1,4 +1,5 @@
 import { ScrollView, View, Text, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuthStore } from '@/lib/auth-store';
 import { Card } from '@/components/ui/card';
@@ -7,6 +8,7 @@ import { ScreenHeader } from '@/components/shared/screen-header';
 
 export default function ProfileScreen() {
   const { user, logout } = useAuthStore();
+  const router = useRouter();
 
   const handleLogout = () => {
     Alert.alert(
@@ -17,7 +19,10 @@ export default function ProfileScreen() {
         {
           text: 'Sign Out',
           style: 'destructive',
-          onPress: () => logout(),
+          onPress: async () => {
+            await logout();
+            router.replace('/(auth)/login');
+          },
         },
       ],
     );

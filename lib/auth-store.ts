@@ -66,7 +66,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         set({ isLoading: false });
       }
     } catch {
-      set({ isLoading: false });
+      set({ isLoading: false, isAuthenticated: false, user: null, accessToken: null, studentId: null });
     }
   },
 

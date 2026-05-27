@@ -22,6 +22,15 @@ export default function AttendanceScreen() {
 
   if (loading && !data) return <Loading fullScreen message="Loading attendance..." />;
   if (error && !data) return <ErrorView message={error} onRetry={refetch} />;
+  if (!studentId) return (
+    <SafeAreaView className="flex-1 bg-slate-50">
+      <ScreenHeader title="Attendance" />
+      <View className="flex-1 items-center justify-center gap-3">
+        <Text className="text-4xl">📅</Text>
+        <Text className="text-slate-500 text-base">No student selected</Text>
+      </View>
+    </SafeAreaView>
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-slate-50">

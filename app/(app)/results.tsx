@@ -15,6 +15,15 @@ export default function ResultsScreen() {
 
   if (loading && !data.length) return <Loading fullScreen message="Loading results..." />;
   if (error && !data.length) return <ErrorView message={error} onRetry={refetch} />;
+  if (!studentId && !data.length) return (
+    <SafeAreaView className="flex-1 bg-slate-50">
+      <ScreenHeader title="Exam Results" />
+      <View className="flex-1 items-center justify-center gap-3">
+        <Text className="text-4xl">📊</Text>
+        <Text className="text-slate-500 text-base">No student selected</Text>
+      </View>
+    </SafeAreaView>
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-slate-50">
