@@ -72,6 +72,10 @@ export default function AppLayout() {
         options={{ href: null, title: 'Timetable' }}
       />
       <Tabs.Screen
+        name="edit-profile"
+        options={{ href: null, title: 'Edit Profile' }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',

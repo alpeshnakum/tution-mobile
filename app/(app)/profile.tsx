@@ -61,6 +61,13 @@ export default function ProfileScreen() {
             </View>
           </Card>
 
+          {/* Edit Profile */}
+          <Button
+            title="Edit Profile"
+            variant="outline"
+            onPress={() => router.push('/(app)/edit-profile')}
+          />
+
           {/* Logout */}
           <Button
             title="Sign Out"
