@@ -193,6 +193,31 @@ export interface TimetableDay {
   periods: TimetablePeriod[];
 }
 
+export interface FeeBreakdownItem {
+  feeHeadName: string;
+  amount: number;
+}
+
+export interface ReceiptData {
+  receiptNumber: string;
+  paymentDate: string;
+  paymentMethod: string;
+  installmentLabel: string;
+  bankName?: string | null;
+  chequeNumber?: string | null;
+  remarks?: string | null;
+  feeBreakdown: FeeBreakdownItem[];
+  installmentTotal: number;
+  concessionAmount: number;
+  previousDue: number;
+  advanceApplied: number;
+  netPayable: number;
+  amountPaid: number;
+  dueAmount: number;
+  student: { name: string; admissionNumber: string };
+  session: { name: string; displayName: string };
+}
+
 export interface NotificationItem {
   _id: string;
   title: string;

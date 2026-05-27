@@ -1,5 +1,6 @@
-import { ScrollView, View, Text, RefreshControl } from 'react-native';
+import { ScrollView, View, Text, RefreshControl, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { useFees } from '@/hooks/use-fees';
 import { Loading } from '@/components/shared/loading';
@@ -16,6 +17,7 @@ const statusVariant: Record<string, 'success' | 'danger' | 'warning'> = {
 };
 
 export default function FeesScreen() {
+  const router = useRouter();
   const { studentId } = useAuthStore();
   const { data, loading, error, refetch } = useFees(studentId);
 
@@ -102,12 +104,16 @@ export default function FeesScreen() {
               {inst.payments.length > 0 && (
                 <View className="mt-2 gap-1">
                   {inst.payments.map((p, pi) => (
-                    <View key={pi} className="flex-row justify-between bg-green-50 rounded-lg px-2 py-1.5">
-                      <Text className="text-xs text-green-700">#{p.receiptNumber}</Text>
+                    <TouchableOpacity
+                      key={pi}
+                      className="flex-row justify-between bg-green-50 rounded-lg px-2 py-1.5 active:opacity-70"
+                      onPress={() => router.push(`/(app)/receipt/${encodeURIComponent(p.receiptNumber)}`)}
+                    >
+                      <Text className="text-xs text-green-700 font-medium">#{p.receiptNumber} ↗</Text>
                       <Text className="text-xs text-green-700">
                         ₹{p.amountPaid.toLocaleString('en-IN')} · {format(new Date(p.paymentDate), 'dd MMM yy')}
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   ))}
                 </View>
               )}
