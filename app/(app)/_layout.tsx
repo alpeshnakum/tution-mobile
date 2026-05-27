@@ -79,6 +79,10 @@ export default function AppLayout() {
         options={{ href: null, title: 'Notices' }}
       />
       <Tabs.Screen
+        name="notifications"
+        options={{ href: null, title: 'Notifications' }}
+      />
+      <Tabs.Screen
         name="homework"
         options={{ href: null, title: 'Homework' }}
       />

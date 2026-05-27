@@ -193,6 +193,21 @@ export interface TimetableDay {
   periods: TimetablePeriod[];
 }
 
+export interface NotificationItem {
+  _id: string;
+  title: string;
+  message: string;
+  type: 'fee_reminder' | 'exam_notice' | 'attendance_alert' | 'result_published' | 'announcement' | 'promotion';
+  status: 'pending' | 'sent' | 'read' | 'failed';
+  createdAt: string;
+  readAt?: string | null;
+}
+
+export interface NotificationsData {
+  notifications: NotificationItem[];
+  unreadCount: number;
+}
+
 export interface Announcement {
   _id: string;
   title: string;

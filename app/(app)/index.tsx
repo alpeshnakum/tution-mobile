@@ -149,7 +149,7 @@ export default function HomeScreen() {
           {/* Quick Access */}
           <View>
             <Text className="text-sm font-semibold text-slate-700 mb-2 px-1">Quick Access</Text>
-            <View className="flex-row gap-3">
+            <View className="flex-row gap-3 mb-3">
               <TouchableOpacity
                 className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
                 onPress={() => router.push('/(app)/homework')}
@@ -171,6 +171,8 @@ export default function HomeScreen() {
                 <Text className="text-3xl">📝</Text>
                 <Text className="text-xs font-semibold text-slate-700">Leaves</Text>
               </TouchableOpacity>
+            </View>
+            <View className="flex-row gap-3">
               <TouchableOpacity
                 className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
                 onPress={() => router.push('/(app)/notices')}
@@ -178,6 +180,14 @@ export default function HomeScreen() {
                 <Text className="text-3xl">📢</Text>
                 <Text className="text-xs font-semibold text-slate-700">Notices</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                onPress={() => router.push('/(app)/notifications')}
+              >
+                <Text className="text-3xl">🔔</Text>
+                <Text className="text-xs font-semibold text-slate-700">Inbox</Text>
+              </TouchableOpacity>
+              <View className="flex-1" />
             </View>
           </View>
         </View>
