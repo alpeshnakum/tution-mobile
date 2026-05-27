@@ -193,6 +193,17 @@ export interface TimetableDay {
   periods: TimetablePeriod[];
 }
 
+export interface Announcement {
+  _id: string;
+  title: string;
+  content: string;
+  targetAudience: 'all' | 'students' | 'parents';
+  priority: 'normal' | 'important' | 'urgent';
+  publishedByName: string;
+  createdAt: string;
+  expiresAt?: string | null;
+}
+
 export interface ChildInfo {
   id: string;
   name: string;

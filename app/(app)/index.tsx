@@ -171,6 +171,13 @@ export default function HomeScreen() {
                 <Text className="text-3xl">📝</Text>
                 <Text className="text-xs font-semibold text-slate-700">Leaves</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                onPress={() => router.push('/(app)/notices')}
+              >
+                <Text className="text-3xl">📢</Text>
+                <Text className="text-xs font-semibold text-slate-700">Notices</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
