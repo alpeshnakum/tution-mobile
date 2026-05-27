@@ -19,7 +19,13 @@ export const secureStorage = {
   },
   async getUser(): Promise<object | null> {
     const raw = await SecureStore.getItemAsync(USER_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      await SecureStore.deleteItemAsync(USER_KEY);
+      return null;
+    }
   },
   async removeUser() {
     await SecureStore.deleteItemAsync(USER_KEY);

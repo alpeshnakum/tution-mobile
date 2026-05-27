@@ -19,9 +19,9 @@ api.interceptors.request.use(async (config) => {
 
 api.interceptors.response.use(
   (response) => response,
-  async (error) => {
+  (error) => {
     if (error.response?.status === 401) {
-      await secureStorage.clearAll();
+      secureStorage.clearAll().catch(() => {});
     }
     return Promise.reject(error);
   }

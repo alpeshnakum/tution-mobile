@@ -28,14 +28,14 @@ export function useLeaves(studentId: string | null) {
     fromDate: string;
     toDate: string;
     reason: string;
-  }) => {
-    if (!studentId) return;
+  }): Promise<void> => {
+    if (!studentId) throw new Error('Not authenticated');
     await api.post('/api/portal/student/leaves', { studentId, ...payload });
     await fetch();
   };
 
-  const cancelLeave = async (leaveId: string) => {
-    if (!studentId) return;
+  const cancelLeave = async (leaveId: string): Promise<void> => {
+    if (!studentId) throw new Error('Not authenticated');
     await api.delete(`/api/portal/student/leaves/${leaveId}?studentId=${studentId}`);
     await fetch();
   };

@@ -94,7 +94,7 @@ export default function HomeScreen() {
             <Card>
               <Text className="text-base font-semibold text-slate-900 mb-3">Upcoming Exams</Text>
               <View className="gap-2">
-                {dashboard!.upcomingExams.map((exam) => (
+                {(dashboard?.upcomingExams ?? []).map((exam) => (
                   <View key={exam.id} className="flex-row items-center justify-between py-2 border-b border-slate-50">
                     <View className="flex-1">
                       <Text className="text-sm font-medium text-slate-800">{exam.title}</Text>
@@ -117,7 +117,7 @@ export default function HomeScreen() {
             <Card>
               <Text className="text-base font-semibold text-slate-900 mb-3">Recent Results</Text>
               <View className="gap-2">
-                {dashboard!.recentResults.map((result, idx) => (
+                {(dashboard?.recentResults ?? []).map((result, idx) => (
                   <View key={idx} className="flex-row items-center justify-between py-2 border-b border-slate-50">
                     <View className="flex-1">
                       <Text className="text-sm font-medium text-slate-800">{result.examTitle}</Text>

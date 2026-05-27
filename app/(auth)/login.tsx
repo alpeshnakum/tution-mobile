@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
+import { getErrorMessage } from '@/lib/api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -30,11 +31,8 @@ export default function LoginScreen() {
     try {
       await login(identifier.trim(), password);
       router.replace('/(app)');
-    } catch (err: any) {
-      Alert.alert(
-        'Login Failed',
-        err?.response?.data?.message || err?.message || 'Invalid credentials',
-      );
+    } catch (err) {
+      Alert.alert('Login Failed', getErrorMessage(err));
     } finally {
       setLoading(false);
     }

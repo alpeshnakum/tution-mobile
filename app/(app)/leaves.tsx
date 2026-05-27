@@ -38,6 +38,15 @@ export default function LeavesScreen() {
       setFormError('All fields are required');
       return;
     }
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(fromDate) || !dateRegex.test(toDate)) {
+      setFormError('Dates must be in YYYY-MM-DD format');
+      return;
+    }
+    if (new Date(fromDate) > new Date(toDate)) {
+      setFormError('From date cannot be after to date');
+      return;
+    }
     setFormError(null);
     setSubmitting(true);
     try {
