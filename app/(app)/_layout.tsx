@@ -83,6 +83,10 @@ export default function AppLayout() {
         options={{ href: null, title: 'Timetable' }}
       />
       <Tabs.Screen
+        name="change-password"
+        options={{ href: null, title: 'Change Password' }}
+      />
+      <Tabs.Screen
         name="edit-profile"
         options={{ href: null, title: 'Edit Profile' }}
       />

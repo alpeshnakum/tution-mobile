@@ -73,6 +73,13 @@ export default function ProfileScreen() {
             />
           )}
 
+          {/* Change Password */}
+          <Button
+            title="Change Password"
+            variant="outline"
+            onPress={() => router.push('/(app)/change-password')}
+          />
+
           {/* Edit Profile */}
           <Button
             title="Edit Profile"

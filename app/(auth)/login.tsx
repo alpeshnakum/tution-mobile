@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   View, Text, ScrollView, KeyboardAvoidingView,
-  Platform, Alert,
+  Platform, Alert, TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
@@ -83,6 +83,12 @@ export default function LoginScreen() {
               loading={loading}
               className="mt-2"
             />
+            <TouchableOpacity
+              className="items-center py-2"
+              onPress={() => router.push('/(auth)/forgot-password')}
+            >
+              <Text className="text-sm text-indigo-500 font-medium">Forgot Password?</Text>
+            </TouchableOpacity>
           </View>
 
           {/* Footer */}
