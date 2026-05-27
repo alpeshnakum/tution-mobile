@@ -100,35 +100,40 @@ export interface FeesData {
 }
 
 export interface AttendanceRecord {
-  _id: string;
   date: string;
   status: 'present' | 'absent' | 'late' | 'excused';
-  className?: string;
-  sectionName?: string;
+  remarks?: string | null;
 }
 
 export interface AttendanceData {
-  records: AttendanceRecord[];
+  student: { id: string; name: string; admissionNumber: string };
+  month: number;
+  year: number;
   summary: {
-    total: number;
+    totalDays: number;
     present: number;
     absent: number;
     late: number;
     excused: number;
     percentage: number;
   };
+  records: AttendanceRecord[];
 }
 
 export interface ExamResult {
-  _id: string;
+  examId: string;
   examTitle: string;
   subject: string;
   examDate: string;
+  examType: string;
   marksObtained: number;
   totalMarks: number;
   percentage: number;
   grade: string;
+  rank?: number;
   isPassed: boolean;
+  isAbsent?: boolean;
+  remarks?: string | null;
 }
 
 export interface Child {
@@ -137,6 +142,18 @@ export interface Child {
   admissionNumber: string;
   className: string;
   sectionName: string;
+}
+
+export interface LeaveRequest {
+  _id: string;
+  leaveType: string;
+  fromDate: string;
+  toDate: string;
+  totalDays: number;
+  reason: string;
+  status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+  reviewNotes?: string | null;
+  createdAt?: string;
 }
 
 export interface ApiResponse<T> {

@@ -13,7 +13,7 @@ export function useResults(studentId: string | null) {
     setError(null);
     try {
       const res = await api.get(`/api/portal/student/results?studentId=${studentId}`);
-      setData(res.data.data || []);
+      setData(res.data.data?.results || []);
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {

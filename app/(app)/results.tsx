@@ -31,7 +31,7 @@ export default function ResultsScreen() {
             </View>
           ) : (
             data.map((result) => (
-              <Card key={result._id}>
+              <Card key={result.examId}>
                 <View className="flex-row items-start justify-between">
                   <View className="flex-1">
                     <Text className="text-sm font-semibold text-slate-900">{result.examTitle}</Text>

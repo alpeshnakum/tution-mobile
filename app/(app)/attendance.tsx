@@ -64,7 +64,7 @@ export default function AttendanceScreen() {
             ) : (
               <View className="gap-2">
                 {data.records.map((record) => (
-                  <View key={record._id} className="flex-row items-center justify-between py-2 border-b border-slate-50">
+                  <View key={record.date} className="flex-row items-center justify-between py-2 border-b border-slate-50">
                     <Text className="text-sm font-medium text-slate-800">
                       {format(new Date(record.date), 'EEE, dd MMM yyyy')}
                     </Text>
