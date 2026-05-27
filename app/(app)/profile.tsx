@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ScreenHeader } from '@/components/shared/screen-header';
 
 export default function ProfileScreen() {
-  const { user, logout } = useAuthStore();
+  const { user, logout, clearStudentContext } = useAuthStore();
   const router = useRouter();
 
   const handleLogout = () => {
@@ -60,6 +60,18 @@ export default function ProfileScreen() {
               ))}
             </View>
           </Card>
+
+          {/* Switch Child (parent only) */}
+          {user?.role === 'parent' && (
+            <Button
+              title="Switch Child"
+              variant="outline"
+              onPress={async () => {
+                await clearStudentContext();
+                router.replace('/(app)/select-child');
+              }}
+            />
+          )}
 
           {/* Edit Profile */}
           <Button

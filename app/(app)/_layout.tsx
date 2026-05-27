@@ -1,6 +1,8 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { Text } from 'react-native';
+import { useEffect } from 'react';
 import { Colors } from '@/constants/colors';
+import { useAuthStore } from '@/lib/auth-store';
 
 function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
   return (
@@ -9,6 +11,15 @@ function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
 }
 
 export default function AppLayout() {
+  const { user, studentId } = useAuthStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user?.role === 'parent' && !studentId) {
+      router.replace('/(app)/select-child');
+    }
+  }, [user?.role, user, studentId]);
+
   return (
     <Tabs
       screenOptions={{
@@ -74,6 +85,10 @@ export default function AppLayout() {
       <Tabs.Screen
         name="edit-profile"
         options={{ href: null, title: 'Edit Profile' }}
+      />
+      <Tabs.Screen
+        name="select-child"
+        options={{ href: null, title: 'Select Child' }}
       />
       <Tabs.Screen
         name="profile"

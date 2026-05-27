@@ -18,6 +18,7 @@ interface AuthStore {
   studentSectionId: string | null;
   studentSessionId: string | null;
   setStudentMeta: (classId: string, sectionId: string, sessionId: string) => Promise<void>;
+  clearStudentContext: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
@@ -92,5 +93,11 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   setStudentMeta: async (classId, sectionId, sessionId) => {
     await secureStorage.saveStudentMeta(classId, sectionId, sessionId);
     set({ studentClassId: classId, studentSectionId: sectionId, studentSessionId: sessionId });
+  },
+
+  clearStudentContext: async () => {
+    await secureStorage.saveStudentMeta('', '', '');
+    await secureStorage.removeStudentId();
+    set({ studentId: null, studentClassId: null, studentSectionId: null, studentSessionId: null });
   },
 }));

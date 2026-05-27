@@ -192,3 +192,18 @@ export interface TimetableDay {
   day: string;
   periods: TimetablePeriod[];
 }
+
+export interface ChildInfo {
+  id: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  admissionNumber: string;
+  classId: string;
+  sectionId?: string;
+  rollNumber?: string | null;
+  branchId: string;
+  status: string;
+  relation?: string | null;
+  isPrimary: boolean;
+}
