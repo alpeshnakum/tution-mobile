@@ -1,7 +1,7 @@
 import { Tabs, useRouter } from 'expo-router';
-import { View, Text } from 'react-native';
+import { View, Text, useColorScheme } from 'react-native';
 import { useEffect } from 'react';
-import { Colors } from '@/constants/colors';
+import { LightColors, DarkColors } from '@/constants/colors';
 import { useAuthStore } from '@/lib/auth-store';
 import { NoInternetBanner } from '@/components/shared/no-internet-banner';
 
@@ -14,6 +14,8 @@ function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
 export default function AppLayout() {
   const { user, studentId } = useAuthStore();
   const router = useRouter();
+  const scheme = useColorScheme();
+  const C = scheme === 'dark' ? DarkColors : LightColors;
 
   useEffect(() => {
     if (user?.role === 'parent' && !studentId) {
@@ -27,11 +29,11 @@ export default function AppLayout() {
       <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.textMuted,
+        tabBarActiveTintColor: C.primary,
+        tabBarInactiveTintColor: C.textMuted,
         tabBarStyle: {
-          backgroundColor: Colors.card,
-          borderTopColor: Colors.border,
+          backgroundColor: C.card,
+          borderTopColor: C.border,
           paddingBottom: 8,
           paddingTop: 4,
           height: 64,

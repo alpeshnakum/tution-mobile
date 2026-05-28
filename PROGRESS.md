@@ -34,8 +34,8 @@
 | Notification Detail screen | ✅ Done |
 | Leave Apply form screen | ✅ Done (dedicated screen) |
 | Dark mode | ❌ Not started |
-| NoInternetBanner | ❌ Not started |
-| Skeleton loaders | ❌ Not started |
+| NoInternetBanner | ✅ Done |
+| Skeleton loaders | ✅ Done (homework, notifications, leaves, results) |
 | Push notifications | ❌ Not started |
 | Online payments (Razorpay) | ❌ Not started |
 | Biometric unlock | ❌ Not started |
