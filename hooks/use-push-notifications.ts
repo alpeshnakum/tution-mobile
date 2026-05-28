@@ -6,19 +6,23 @@ import { Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import { api } from '@/lib/api';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
+const isExpoGo = Constants.appOwnership === 'expo';
 
 export function usePushNotifications(isAuthenticated: boolean) {
   const router = useRouter();
   const registered = useRef(false);
 
   useEffect(() => {
+    if (isExpoGo) return;
+
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      }),
+    });
+
     const subscription = Notifications.addNotificationResponseReceivedListener(() => {
       router.push('/(app)/notifications');
     });
@@ -26,7 +30,7 @@ export function usePushNotifications(isAuthenticated: boolean) {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated || registered.current) return;
+    if (isExpoGo || !isAuthenticated || registered.current) return;
 
     async function register() {
       if (!Device.isDevice) return;
