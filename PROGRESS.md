@@ -1,6 +1,6 @@
 # OAC Mobile — Full Project Progress
 
-> **Last updated:** 2026-05-28
+> **Last updated:** 2026-05-28 (session 2)
 > **App name:** OAC Student Portal
 > **Platform:** React Native (Expo ~54.0.0, SDK 54), TypeScript
 > **Scope:** Student + Parent portal (student primary, parent can select child)
@@ -29,10 +29,10 @@
 | Change Password | ✅ Done |
 | Parent child-select | ✅ Done (basic) |
 | Forgot Password | ✅ Screen exists |
-| Reset Password (OTP flow) | ❌ Screen missing |
-| Homework Detail screen | ❌ Missing |
-| Notification Detail screen | ❌ Missing |
-| Leave Apply form screen | ❌ Missing (inline only) |
+| Reset Password (OTP flow) | ✅ Done (built into forgot-password.tsx, step 2) |
+| Homework Detail screen | ✅ Done |
+| Notification Detail screen | ✅ Done |
+| Leave Apply form screen | ✅ Done (dedicated screen) |
 | Dark mode | ❌ Not started |
 | NoInternetBanner | ❌ Not started |
 | Skeleton loaders | ❌ Not started |
@@ -284,7 +284,7 @@ All responses: `{ success: boolean, data: T, meta?: {...}, error: string | null 
 |--------|------|--------|-------|
 | Login | `(auth)/login.tsx` | ✅ Done | identifier + password, saves to SecureStore |
 | Forgot Password | `(auth)/forgot-password.tsx` | ✅ Screen done | Backend OTP endpoint may need verification |
-| Reset Password | `(auth)/reset-password.tsx` | ❌ Missing | No screen, no hook — need to build |
+| Reset Password | built into `(auth)/forgot-password.tsx` step 2 | ✅ Done | OTP entry + new password in same screen as forgot-password |
 
 ### Main Tab Screens
 
@@ -310,10 +310,9 @@ All responses: `{ success: boolean, data: T, meta?: {...}, error: string | null 
 | Change Password | `(app)/change-password.tsx` | ✅ Done | Current + new + confirm password |
 | Select Child | `(app)/select-child.tsx` | ✅ Done | Parent role: pick which child's data to view |
 | Fee Receipt | `(app)/receipt/[receiptNumber].tsx` | ✅ Done | Full breakdown — feeHeads, concession, payment method |
-| Homework Detail | `(app)/homework/[id].tsx` | ❌ Missing | Full description + attachments view |
-| Notification Detail | `(app)/notifications/[id].tsx` | ❌ Missing | Full notification body |
-| Leave Apply | `(app)/leaves/apply.tsx` | ❌ Missing | Dedicated apply form (currently embedded in leaves.tsx) |
-| Reset Password | `(auth)/reset-password.tsx` | ❌ Missing | OTP entry + new password |
+| Homework Detail | `(app)/homework/[id].tsx` | ✅ Done | Subject/status badges, due date, full description, graded info |
+| Notification Detail | `(app)/notifications/[id].tsx` | ✅ Done | Full body, type badge, read status, timestamps |
+| Leave Apply | `(app)/leaves/apply.tsx` | ✅ Done | Dedicated form, validation, direct API call; leaves.tsx refetches on focus |
 
 ---
 
@@ -421,22 +420,13 @@ The `api.ts` client falls back to `http://localhost:3000` if `EXPO_PUBLIC_API_UR
 
 ## What's Left To Build
 
-### High priority (app is incomplete without these)
+### High priority — ✅ All done
 
-1. **`(auth)/reset-password.tsx`** — OTP entry screen after forgot-password
-   - Needs backend: `POST /api/auth/reset-password`
-   - Input: `username` (passed from forgot-password), `otp` (6 digits), `newPassword`
-
-2. **`(app)/homework/[id].tsx`** — Homework detail
-   - Show full description, due date, attachments list (file download links)
-   - Data already in `HomeworkItem` type
-
-3. **`(app)/notifications/[id].tsx`** — Notification detail
-   - Full body text, type badge, timestamp
-   - Auto mark-as-read on open
-
-4. **Leave Apply form** — Currently leave apply is inline in `leaves.tsx`
-   - Should be `(app)/leaves/apply.tsx` with date pickers, leave type dropdown, reason text
+1. ~~Reset password screen~~ — built into `forgot-password.tsx` (2-step flow)
+2. ~~Homework detail~~ — `homework/[id].tsx` ✅
+3. ~~Notification detail~~ — `notifications/[id].tsx` ✅
+4. ~~Leave apply form~~ — `leaves/apply.tsx` ✅
+5. ~~Token refresh~~ — `lib/api.ts` silent refresh interceptor ✅
 
 ### Medium priority (polish)
 
@@ -473,6 +463,8 @@ The `api.ts` client falls back to `http://localhost:3000` if `EXPO_PUBLIC_API_UR
 | `578884e` | Exam schedule screen (upcoming/all filter) |
 | `6e6dc05` | Downgrade Expo SDK, swap expo-status-bar → expo-asset |
 | `316a280` | Mobile plan phase files added |
+| `210d321` | PROGRESS.md + CLAUDE.md + UI_REDESIGN_PROMPT.md added |
+| `349ff48` | Detail screens (homework, notifications), leave apply screen, token refresh |
 
 ---
 
@@ -482,8 +474,8 @@ The `api.ts` client falls back to `http://localhost:3000` if `EXPO_PUBLIC_API_UR
 |-------|----------|-------|
 | Theme mismatch | Medium | App uses indigo, web ERP uses terracotta — visually inconsistent |
 | No TanStack Query | Medium | Custom hooks don't cache, deduplicate requests, or handle stale data automatically |
-| No token refresh | High | 401 clears storage (forces re-login) but no silent refresh — session will expire |
-| Leave apply inline | Low | Apply form embedded in leaves.tsx — should be a dedicated screen |
+| No token refresh | ✅ Fixed | Silent refresh interceptor in api.ts with request queue for concurrent 401s |
+| Leave apply inline | ✅ Fixed | Dedicated leaves/apply.tsx screen, leaves.tsx uses useFocusEffect to refetch on back |
 | `sectionId` not set | Low | `setStudentMeta` called with empty string for `sectionId` in dashboard — timetable may fail if sectionId required |
 | No form validation | Medium | Change-password, edit-profile use manual state — no validation library |
 | No offline support | Low | All screens show error if network unavailable — no cached data fallback |
