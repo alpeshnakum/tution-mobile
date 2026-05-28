@@ -40,7 +40,7 @@
 | Online payments (Razorpay) | ❌ Not started |
 | Biometric unlock | ✅ Done (Face ID/fingerprint on login, iOS Face ID permission) |
 | EAS build + app store | ✅ Done (eas.json 3 profiles, bundleIdentifier, submit config) |
-| Tests (unit + E2E) | ✅ Done (Jest 11 tests — auth store + biometric; E2E not started) |
+| Tests (unit + E2E) | ✅ Done (Jest 19 tests — auth store, biometric, attendance, fees, leaves; E2E not started) |
 
 ---
 
