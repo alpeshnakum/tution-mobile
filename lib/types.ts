@@ -193,6 +193,32 @@ export interface TimetableDay {
   periods: TimetablePeriod[];
 }
 
+export interface ExamSubject {
+  subjectName: string;
+  examDate: string;
+  totalMarks: number;
+  passingMarks: number;
+}
+
+export interface ExamScheduleItem {
+  id: string;
+  title: string;
+  examType: string;
+  isMultiSubject: boolean;
+  examDate: string | null;
+  startTime: string | null;
+  duration: number | null;
+  subjectName: string | null;
+  totalMarks: number | null;
+  passingMarks: number | null;
+  subjects: ExamSubject[];
+}
+
+export interface ExamsData {
+  exams: ExamScheduleItem[];
+  session: { id: string; displayName: string };
+}
+
 export interface FeeBreakdownItem {
   feeHeadName: string;
   amount: number;

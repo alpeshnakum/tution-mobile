@@ -75,6 +75,10 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
+        name="exams"
+        options={{ href: null, title: 'Exam Schedule' }}
+      />
+      <Tabs.Screen
         name="notices"
         options={{ href: null, title: 'Notices' }}
       />
