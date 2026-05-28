@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
@@ -14,6 +13,9 @@ export function usePushNotifications(isAuthenticated: boolean) {
 
   useEffect(() => {
     if (isExpoGo) return;
+
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const Notifications: typeof import('expo-notifications') = require('expo-notifications');
 
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
@@ -33,6 +35,9 @@ export function usePushNotifications(isAuthenticated: boolean) {
     if (isExpoGo || !isAuthenticated || registered.current) return;
 
     async function register() {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const Notifications: typeof import('expo-notifications') = require('expo-notifications');
+
       if (!Device.isDevice) return;
 
       if (Platform.OS === 'android') {
