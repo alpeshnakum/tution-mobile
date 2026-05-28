@@ -1,5 +1,6 @@
-import { ScrollView, View, Text, RefreshControl } from 'react-native';
+import { ScrollView, View, Text, RefreshControl, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { useHomework } from '@/hooks/use-homework';
 import { Loading } from '@/components/shared/loading';
@@ -10,6 +11,7 @@ import { ScreenHeader } from '@/components/shared/screen-header';
 import { format, isPast, differenceInDays } from 'date-fns';
 
 export default function HomeworkScreen() {
+  const router = useRouter();
   const { studentClassId, studentSectionId, user } = useAuthStore();
   const branchId = user?.branchId ?? null;
   const { data, loading, error, refetch } = useHomework(studentClassId, branchId, studentSectionId);
@@ -52,24 +54,29 @@ export default function HomeworkScreen() {
             data.map((hw) => {
               const due = getDueBadge(hw.dueDate);
               return (
-                <Card key={hw._id}>
-                  <View className="flex-row items-start justify-between mb-2">
-                    <Badge label={hw.subjectName} variant="primary" />
-                    <Badge label={due.label} variant={due.variant} />
-                  </View>
-                  <Text className="text-sm font-semibold text-slate-900 mt-1">{hw.title}</Text>
-                  {hw.description ? (
-                    <Text className="text-xs text-slate-500 mt-1" numberOfLines={2}>{hw.description}</Text>
-                  ) : null}
-                  <View className="flex-row items-center justify-between mt-3 pt-2 border-t border-slate-50">
-                    <Text className="text-xs text-slate-400">
-                      Due: {format(new Date(hw.dueDate), 'EEE, dd MMM yyyy')}
-                    </Text>
-                    {hw.isGraded && hw.maxMarks ? (
-                      <Text className="text-xs text-indigo-500 font-medium">{hw.maxMarks} marks</Text>
+                <TouchableOpacity
+                  key={hw._id}
+                  activeOpacity={0.7}
+                  onPress={() => router.push({ pathname: '/(app)/homework/[id]', params: { id: hw._id, item: JSON.stringify(hw) } })}
+                >
+                  <Card>
+                    <View className="flex-row items-start justify-between mb-2">
+                      <Badge label={hw.subjectName} variant="primary" />
+                      <Badge label={due.label} variant={due.variant} />
+                    </View>
+                    <Text className="text-sm font-semibold text-slate-900 mt-1">{hw.title}</Text>
+                    {hw.description ? (
+                      <Text className="text-xs text-slate-500 mt-1" numberOfLines={2}>{hw.description}</Text>
                     ) : null}
-                  </View>
-                </Card>
+                    <View className="flex-row items-center justify-between mt-3 pt-2 border-t border-slate-100">
+                      <Text className="text-xs text-slate-400">Due: {format(new Date(hw.dueDate), 'EEE, dd MMM yyyy')}</Text>
+                      <View className="flex-row items-center gap-2">
+                        {hw.isGraded && hw.maxMarks ? <Text className="text-xs text-indigo-500 font-medium">{hw.maxMarks} marks</Text> : null}
+                        <Text className="text-slate-300">›</Text>
+                      </View>
+                    </View>
+                  </Card>
+                </TouchableOpacity>
               );
             })
           )}

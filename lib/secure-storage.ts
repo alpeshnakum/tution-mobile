@@ -2,6 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import type { User } from './types';
 
 const TOKEN_KEY = 'oac_access_token';
+const REFRESH_TOKEN_KEY = 'oac_refresh_token';
 const USER_KEY = 'oac_user';
 const STUDENT_ID_KEY = 'oac_student_id';
 
@@ -14,6 +15,15 @@ export const secureStorage = {
   },
   async removeToken() {
     await SecureStore.deleteItemAsync(TOKEN_KEY);
+  },
+  async saveRefreshToken(token: string) {
+    await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, token);
+  },
+  async getRefreshToken(): Promise<string | null> {
+    return SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+  },
+  async removeRefreshToken() {
+    await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
   },
   async saveUser(user: User) {
     await SecureStore.setItemAsync(USER_KEY, JSON.stringify(user));
@@ -65,6 +75,7 @@ export const secureStorage = {
   async clearAll() {
     await Promise.all([
       SecureStore.deleteItemAsync(TOKEN_KEY),
+      SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY),
       SecureStore.deleteItemAsync(USER_KEY),
       SecureStore.deleteItemAsync(STUDENT_ID_KEY),
       SecureStore.deleteItemAsync('oac_class_id'),

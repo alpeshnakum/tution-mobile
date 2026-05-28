@@ -1,5 +1,6 @@
 import { ScrollView, View, Text, RefreshControl, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { useNotifications } from '@/hooks/use-notifications';
 import { Loading } from '@/components/shared/loading';
 import { ErrorView } from '@/components/shared/error-view';
@@ -26,11 +27,15 @@ function NotificationCard({
 }) {
   const isUnread = item.status === 'pending' || item.status === 'sent';
   const config = typeConfig[item.type] ?? { emoji: '🔔', label: item.type };
+  const router = useRouter();
 
   return (
     <TouchableOpacity
-      onPress={() => isUnread && onRead(item._id)}
-      activeOpacity={isUnread ? 0.7 : 1}
+      onPress={() => {
+        if (isUnread) onRead(item._id);
+        router.push({ pathname: '/(app)/notifications/[id]', params: { id: item._id, item: JSON.stringify(item) } });
+      }}
+      activeOpacity={0.7}
     >
       <Card>
         <View className="flex-row gap-3">

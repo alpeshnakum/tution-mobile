@@ -36,9 +36,10 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({ error: null });
     try {
       const { data } = await api.post('/api/auth/login', { identifier, password });
-      const { user, accessToken } = data;
+      const { user, accessToken, refreshToken } = data;
 
       await secureStorage.saveToken(accessToken);
+      if (refreshToken) await secureStorage.saveRefreshToken(refreshToken);
       await secureStorage.saveUser(user);
 
       const studentId = user.role === 'student' ? user.id : null;
