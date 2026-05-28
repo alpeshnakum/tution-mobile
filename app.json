@@ -31,6 +31,14 @@
       "expo-router",
       "expo-secure-store",
       "expo-local-authentication",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#CC785C",
+          "defaultChannel": "default"
+        }
+      ],
       "expo-font",
       "expo-splash-screen",
       "expo-asset"

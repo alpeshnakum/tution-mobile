@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { LightColors, DarkColors } from '@/constants/colors';
 import { useAuthStore } from '@/lib/auth-store';
 import { NoInternetBanner } from '@/components/shared/no-internet-banner';
+import { usePushNotifications } from '@/hooks/use-push-notifications';
 
 function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
   return (
@@ -12,7 +13,7 @@ function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
 }
 
 export default function AppLayout() {
-  const { user, studentId } = useAuthStore();
+  const { user, studentId, isAuthenticated } = useAuthStore();
   const router = useRouter();
   const scheme = useColorScheme();
   const C = scheme === 'dark' ? DarkColors : LightColors;
@@ -22,6 +23,8 @@ export default function AppLayout() {
       router.replace('/(app)/select-child');
     }
   }, [user?.role, user, studentId]);
+
+  usePushNotifications(isAuthenticated);
 
   return (
     <View className="flex-1">

@@ -38,7 +38,7 @@
 | Skeleton loaders | ✅ Done (homework, notifications, leaves, results) |
 | Push notifications | ❌ Not started |
 | Online payments (Razorpay) | ❌ Not started |
-| Biometric unlock | ❌ Not started |
+| Biometric unlock | ✅ Done (Face ID/fingerprint on login, iOS Face ID permission) |
 | EAS build + app store | ❌ Not started |
 | Tests (unit + E2E) | ❌ Not started |
 
