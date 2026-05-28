@@ -36,7 +36,7 @@
 | Dark mode | ✅ Done (CSS vars + darkMode:media + dynamic tab bar) |
 | NoInternetBanner | ✅ Done |
 | Skeleton loaders | ✅ Done (homework, notifications, leaves, results) |
-| Push notifications | ❌ Not started |
+| Push notifications | ✅ Done (registration, tap handler → notifications screen, projectId for EAS) |
 | Online payments (Razorpay) | ❌ Not started |
 | Biometric unlock | ✅ Done (Face ID/fingerprint on login, iOS Face ID permission) |
 | EAS build + app store | ❌ Not started |

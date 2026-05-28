@@ -8,6 +8,7 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.nothingtest.oac.mobile",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Sign in to your student account with Face ID"
       }
@@ -20,7 +21,8 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.nothingtest.oac.mobile"
+      "package": "com.nothingtest.oac.mobile",
+      "versionCode": 1
     },
     "scheme": "oacmobile",
     "web": {
@@ -42,6 +44,11 @@
       "expo-font",
       "expo-splash-screen",
       "expo-asset"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "YOUR_EAS_PROJECT_ID"
+      }
+    }
   }
 }
