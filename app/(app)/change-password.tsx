@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
 import { api, getErrorMessage } from '@/lib/api';
 import { Input } from '@/components/ui/input';
@@ -24,9 +25,12 @@ export default function ChangePasswordScreen() {
     setLoading(true);
     try {
       await api.put('/api/auth/change-password', { currentPassword: currentPassword.trim(), newPassword: newPassword.trim() });
-      Alert.alert('Success', 'Password changed successfully.', [
-        { text: 'OK', onPress: () => router.back() },
-      ]);
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Password changed successfully.',
+      });
+      router.back();
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {

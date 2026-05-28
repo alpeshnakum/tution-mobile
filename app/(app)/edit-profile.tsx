@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ScrollView, View, Text, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, View, Text, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { useProfileUpdate } from '@/hooks/use-profile-update';
@@ -38,14 +39,21 @@ export default function EditProfileScreen() {
     if (email.trim()) payload.email = email.trim();
     if (address.trim()) payload.address = address.trim();
     if (Object.keys(payload).length === 0) {
-      Alert.alert('Nothing to update', 'Fill in at least one field to update.');
+      Toast.show({
+        type: 'info',
+        text1: 'Nothing to update',
+        text2: 'Fill in at least one field to update.',
+      });
       return;
     }
     try {
       await update(payload);
-      Alert.alert('Success', 'Profile updated successfully.', [
-        { text: 'OK', onPress: () => router.back() },
-      ]);
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Profile updated successfully.',
+      });
+      router.back();
     } catch {
       // error already set in hook
     }

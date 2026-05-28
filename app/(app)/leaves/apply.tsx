@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { api, getErrorMessage } from '@/lib/api';
@@ -49,9 +50,12 @@ export default function ApplyLeaveScreen() {
         toDate,
         reason: reason.trim(),
       });
-      Alert.alert('Success', 'Leave request submitted successfully.', [
-        { text: 'OK', onPress: () => router.back() },
-      ]);
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Leave request submitted successfully.',
+      });
+      router.back();
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {

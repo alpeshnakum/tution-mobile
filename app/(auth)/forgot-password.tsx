@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
 import { api, getErrorMessage } from '@/lib/api';
 import { Input } from '@/components/ui/input';
@@ -44,9 +45,12 @@ export default function ForgotPasswordScreen() {
         otp: otp.trim(),
         newPassword: newPassword.trim(),
       });
-      Alert.alert('Success', 'Password reset successfully. Please log in.', [
-        { text: 'OK', onPress: () => router.replace('/(auth)/login') },
-      ]);
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Password reset successfully. Please log in.',
+      });
+      router.replace('/(auth)/login');
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {

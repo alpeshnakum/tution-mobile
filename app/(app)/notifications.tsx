@@ -1,5 +1,6 @@
-import { ScrollView, View, Text, RefreshControl, TouchableOpacity, Alert } from 'react-native';
+import { ScrollView, View, Text, RefreshControl, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
 import { useNotifications } from '@/hooks/use-notifications';
 import { ErrorView } from '@/components/shared/error-view';
@@ -80,7 +81,11 @@ export default function NotificationsScreen() {
     try {
       await markAllRead();
     } catch (err: any) {
-      Alert.alert('Error', err.message || 'Failed to mark all as read');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: err.message || 'Failed to mark all as read',
+      });
     }
   };
 

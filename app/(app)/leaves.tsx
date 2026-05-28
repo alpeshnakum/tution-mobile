@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, Alert, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { useLeaves } from '@/hooks/use-leaves';
@@ -37,7 +38,11 @@ export default function LeavesScreen() {
           try {
             await cancelLeave(leaveId);
           } catch (err) {
-            Alert.alert('Error', getErrorMessage(err));
+            Toast.show({
+              type: 'error',
+              text1: 'Error',
+              text2: getErrorMessage(err),
+            });
           }
         },
       },

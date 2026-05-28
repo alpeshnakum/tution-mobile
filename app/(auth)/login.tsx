@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import {
   View, Text, ScrollView, KeyboardAvoidingView,
-  Platform, Alert, TouchableOpacity,
+  Platform, TouchableOpacity,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { getErrorMessage } from '@/lib/api';
@@ -34,7 +35,11 @@ export default function LoginScreen() {
         router.replace('/(app)');
       }
     } catch (err) {
-      Alert.alert('Biometric Error', getErrorMessage(err));
+      Toast.show({
+        type: 'error',
+        text1: 'Biometric Error',
+        text2: getErrorMessage(err),
+      });
     } finally {
       setBiometricLoading(false);
     }
@@ -55,7 +60,11 @@ export default function LoginScreen() {
       await login(identifier.trim(), password);
       router.replace('/(app)');
     } catch (err) {
-      Alert.alert('Login Failed', getErrorMessage(err));
+      Toast.show({
+        type: 'error',
+        text1: 'Login Failed',
+        text2: getErrorMessage(err),
+      });
     } finally {
       setLoading(false);
     }
