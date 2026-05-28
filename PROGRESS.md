@@ -39,8 +39,8 @@
 | Push notifications | ✅ Done (registration, tap handler → notifications screen, projectId for EAS) |
 | Online payments (Razorpay) | ❌ Not started |
 | Biometric unlock | ✅ Done (Face ID/fingerprint on login, iOS Face ID permission) |
-| EAS build + app store | ❌ Not started |
-| Tests (unit + E2E) | ❌ Not started |
+| EAS build + app store | ✅ Done (eas.json 3 profiles, bundleIdentifier, submit config) |
+| Tests (unit + E2E) | ✅ Done (Jest 11 tests — auth store + biometric; E2E not started) |
 
 ---
 
