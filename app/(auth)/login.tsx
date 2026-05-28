@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View, Text, ScrollView, KeyboardAvoidingView,
   Platform, Alert, TouchableOpacity,
@@ -6,16 +6,38 @@ import {
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { getErrorMessage } from '@/lib/api';
+import { checkBiometricAvailable, authenticateWithBiometric } from '@/hooks/use-biometric';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { login } = useAuthStore();
+  const { login, loadFromStorage } = useAuthStore();
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ identifier?: string; password?: string }>({});
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
+  const [biometricLoading, setBiometricLoading] = useState(false);
+
+  useEffect(() => {
+    checkBiometricAvailable().then(setBiometricAvailable).catch(() => {});
+  }, []);
+
+  const handleBiometric = async () => {
+    setBiometricLoading(true);
+    try {
+      const success = await authenticateWithBiometric();
+      if (success) {
+        await loadFromStorage();
+        router.replace('/(app)');
+      }
+    } catch (err) {
+      Alert.alert('Biometric Error', getErrorMessage(err));
+    } finally {
+      setBiometricLoading(false);
+    }
+  };
 
   const validate = () => {
     const e: typeof errors = {};
@@ -89,6 +111,21 @@ export default function LoginScreen() {
             >
               <Text className="text-sm text-primary font-medium">Forgot Password?</Text>
             </TouchableOpacity>
+            {biometricAvailable && (
+              <TouchableOpacity
+                className="items-center py-3 gap-2"
+                onPress={handleBiometric}
+                disabled={biometricLoading}
+                activeOpacity={0.7}
+              >
+                <View className="w-14 h-14 rounded-full bg-primary-light items-center justify-center">
+                  <Text className="text-3xl">🔐</Text>
+                </View>
+                <Text className="text-sm text-muted-foreground">
+                  {biometricLoading ? 'Authenticating...' : 'Sign in with biometrics'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           {/* Footer */}

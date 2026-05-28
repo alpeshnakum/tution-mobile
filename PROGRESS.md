@@ -33,7 +33,7 @@
 | Homework Detail screen | ✅ Done |
 | Notification Detail screen | ✅ Done |
 | Leave Apply form screen | ✅ Done (dedicated screen) |
-| Dark mode | ❌ Not started |
+| Dark mode | ✅ Done (CSS vars + darkMode:media + dynamic tab bar) |
 | NoInternetBanner | ✅ Done |
 | Skeleton loaders | ✅ Done (homework, notifications, leaves, results) |
 | Push notifications | ❌ Not started |
