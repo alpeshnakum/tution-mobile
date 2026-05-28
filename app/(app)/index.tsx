@@ -16,10 +16,14 @@ export default function HomeScreen() {
   const { data, loading, error, refetch } = useDashboard(studentId);
 
   useEffect(() => {
-    if (data?.student?.classId && data?.session?.id && user?.branchId) {
-      setStudentMeta(data.student.classId, '', data.session.id);
+    if (data?.student?.classId && data?.session?.id) {
+      setStudentMeta(
+        data.student.classId,
+        data.student.sectionId ?? '',
+        data.session.id
+      );
     }
-  }, [data?.student?.classId, data?.session?.id]);
+  }, [data?.student?.classId, data?.student?.sectionId, data?.session?.id]);
 
   if (loading && !data) return <Loading fullScreen message="Loading dashboard..." />;
   if (error && !data) return <ErrorView message={error} onRetry={refetch} />;

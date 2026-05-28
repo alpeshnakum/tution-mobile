@@ -24,6 +24,7 @@ export interface DashboardData {
     name: string;
     admissionNumber: string;
     classId?: string;
+    sectionId?: string;
     className: string | null;
     rollNumber: string | null;
   };
