@@ -8,6 +8,7 @@ import { SkeletonList } from '@/components/shared/skeleton';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScreenHeader } from '@/components/shared/screen-header';
+import { EmptyBoxIcon } from '@/components/icons';
 import { format, isPast, differenceInDays } from 'date-fns';
 
 export default function HomeworkScreen() {
@@ -17,7 +18,7 @@ export default function HomeworkScreen() {
   const { data, loading, error, refetch } = useHomework(studentClassId, branchId, studentSectionId);
 
   if (loading && !data.length) return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF9F5' }}>
       <ScreenHeader title="Homework" showBack />
       <View className="px-4 py-4">
         <SkeletonList count={5} />
@@ -26,11 +27,11 @@ export default function HomeworkScreen() {
   );
   if (error && !data.length) return <ErrorView message={error} onRetry={refetch} />;
   if (!studentClassId) return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF9F5' }}>
       <ScreenHeader title="Homework" showBack />
       <View className="flex-1 items-center justify-center gap-3">
-        <Text className="text-4xl">📚</Text>
-        <Text className="text-muted-foreground text-base">No class assigned yet</Text>
+        <EmptyBoxIcon size={48} color="#6B6862" />
+        <Text className="text-slate-500 text-base">No class assigned yet</Text>
       </View>
     </SafeAreaView>
   );
@@ -44,7 +45,7 @@ export default function HomeworkScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF9F5' }}>
       <ScreenHeader title="Homework" showBack />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -53,9 +54,9 @@ export default function HomeworkScreen() {
         <View className="px-4 py-4 gap-3">
           {data.length === 0 ? (
             <View className="py-16 items-center gap-3">
-              <Text className="text-4xl">🎉</Text>
-              <Text className="text-muted-foreground text-base font-medium">No pending homework!</Text>
-              <Text className="text-muted-foreground text-sm">You're all caught up</Text>
+              <EmptyBoxIcon size={48} color="#6B6862" />
+              <Text className="text-slate-500 text-base font-medium">No pending homework!</Text>
+              <Text className="text-slate-400 text-sm">You're all caught up</Text>
             </View>
           ) : (
             data.map((hw) => {
@@ -71,15 +72,20 @@ export default function HomeworkScreen() {
                       <Badge label={hw.subjectName} variant="primary" />
                       <Badge label={due.label} variant={due.variant} />
                     </View>
-                    <Text className="text-sm font-semibold text-foreground mt-1">{hw.title}</Text>
+                    <Text className="text-sm font-semibold text-slate-900 mt-1">{hw.title}</Text>
                     {hw.description ? (
-                      <Text className="text-xs text-muted-foreground mt-1" numberOfLines={2}>{hw.description}</Text>
+                      <Text className="text-xs text-slate-500 mt-1" numberOfLines={2}>{hw.description}</Text>
                     ) : null}
-                    <View className="flex-row items-center justify-between mt-3 pt-2 border-t border-border">
-                      <Text className="text-xs text-muted-foreground">Due: {format(new Date(hw.dueDate), 'EEE, dd MMM yyyy')}</Text>
+                    <View className="flex-row items-center justify-between mt-3 pt-2 border-t border-slate-50">
+                      <Text className="text-xs text-slate-400">
+                        Due: {format(new Date(hw.dueDate), 'EEE, dd MMM yyyy')}
+                      </Text>
                       <View className="flex-row items-center gap-2">
-                        {hw.isGraded && hw.maxMarks ? <Text className="text-xs text-primary font-medium">{hw.maxMarks} marks</Text> : null}
-                        <Text className="text-muted-foreground">›</Text>
+                        {hw.isGraded && hw.maxMarks ? (
+                          <Text className="text-xs font-medium" style={{ color: '#CC785C' }}>
+                            {hw.maxMarks} marks
+                          </Text>
+                        ) : null}
                       </View>
                     </View>
                   </Card>

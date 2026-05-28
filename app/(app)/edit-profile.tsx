@@ -53,18 +53,18 @@ export default function EditProfileScreen() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1"
+      style={{ flex: 1, backgroundColor: '#FAF9F5' }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <SafeAreaView className="flex-1 bg-background">
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF9F5' }}>
         <ScreenHeader title="Edit Profile" showBack />
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           <View className="px-4 py-4 gap-4">
-            <View className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
-              <Text className="text-xs text-amber-700">Only phone, email, and address can be updated. Leave a field empty to keep the current value.</Text>
+            <View className="rounded-xl px-4 py-3 border" style={{ backgroundColor: '#F5EBD1', borderColor: '#F5EBD1' }}>
+              <Text className="text-xs" style={{ color: '#C89B3C' }}>Only phone, email, and address can be updated. Leave a field empty to keep the current value.</Text>
             </View>
 
             <Input
@@ -95,7 +95,7 @@ export default function EditProfileScreen() {
             />
 
             {error ? (
-              <Text className="text-sm text-danger text-center">{error}</Text>
+              <Text className="text-sm text-red-500 text-center">{error}</Text>
             ) : null}
 
             <Button title="Save Changes" onPress={handleSave} loading={loading} />

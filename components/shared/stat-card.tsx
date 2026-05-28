@@ -1,17 +1,28 @@
 import { View, Text } from 'react-native';
+import { Colors } from '@/constants/colors';
 
 interface StatCardProps {
   label: string;
   value: string | number;
-  color?: string;
   bgColor?: string;
+  textColor?: string;
 }
 
-export function StatCard({ label, value, color = 'text-foreground', bgColor = 'bg-white' }: StatCardProps) {
+export function StatCard({
+  label,
+  value,
+  bgColor = Colors.sidebarActive,
+  textColor = Colors.primary,
+}: StatCardProps) {
   return (
-    <View className={`${bgColor} rounded-2xl p-4 flex-1 items-center border border-border`}>
-      <Text className={`text-2xl font-bold ${color}`}>{value}</Text>
-      <Text className="text-xs text-muted-foreground mt-1 text-center">{label}</Text>
+    <View
+      className="flex-1 rounded-xl p-3 items-center"
+      style={{ backgroundColor: bgColor }}
+    >
+      <Text className="text-2xl font-bold" style={{ color: textColor }}>
+        {value}
+      </Text>
+      <Text className="text-xs mt-1 text-center" style={{ color: Colors.inkMuted }}>{label}</Text>
     </View>
   );
 }

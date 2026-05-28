@@ -5,6 +5,7 @@ import { useAuthStore } from '@/lib/auth-store';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScreenHeader } from '@/components/shared/screen-header';
+import { ProfileIcon } from '@/components/icons';
 
 export default function ProfileScreen() {
   const { user, logout, clearStudentContext } = useAuthStore();
@@ -29,33 +30,43 @@ export default function ProfileScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <ScreenHeader title="Profile" />
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF9F5' }}>
+      <ScreenHeader title="Profile" showMenu />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-4 py-4 gap-4">
           {/* Avatar */}
           <View className="items-center py-4">
-            <View className="w-20 h-20 bg-primary-light rounded-full items-center justify-center mb-3">
-              <Text className="text-4xl">👤</Text>
+            <View
+              className="w-24 h-24 rounded-full items-center justify-center mb-3"
+              style={{ backgroundColor: '#F5EDE8' }}
+            >
+              <ProfileIcon size={40} color="#CC785C" />
             </View>
-            <Text className="text-xl font-bold text-foreground">
+            <Text className="text-2xl font-bold text-slate-900 mt-3">
               {user?.firstName} {user?.lastName}
             </Text>
-            <Text className="text-muted-foreground text-sm capitalize mt-0.5">{user?.role}</Text>
+            <View
+              className="rounded-full px-3 py-1 self-center mt-1"
+              style={{ backgroundColor: '#F5EDE8' }}
+            >
+              <Text className="text-xs font-medium capitalize" style={{ color: '#9E5742' }}>
+                {user?.role}
+              </Text>
+            </View>
           </View>
 
           {/* Info */}
           <Card>
-            <Text className="text-sm font-semibold text-foreground mb-3">Account Details</Text>
+            <Text className="text-sm font-semibold text-slate-900 mb-3">Account Details</Text>
             <View className="gap-3">
               {[
                 { label: 'Username', value: user?.username },
-                { label: 'Email', value: user?.email },
-                { label: 'Role', value: user?.role },
+                { label: 'Email',    value: user?.email },
+                { label: 'Role',     value: user?.role },
               ].map(({ label, value }) => (
-                <View key={label} className="flex-row justify-between items-center">
-                  <Text className="text-sm text-muted-foreground">{label}</Text>
-                  <Text className="text-sm font-medium text-foreground">{value || '-'}</Text>
+                <View key={label} className="flex-row justify-between items-center py-3 border-b border-slate-100">
+                  <Text className="text-sm text-slate-500">{label}</Text>
+                  <Text className="text-sm font-medium text-slate-900">{value || '-'}</Text>
                 </View>
               ))}
             </View>
@@ -73,26 +84,21 @@ export default function ProfileScreen() {
             />
           )}
 
-          {/* Change Password */}
           <Button
             title="Change Password"
             variant="outline"
             onPress={() => router.push('/(app)/change-password')}
           />
-
-          {/* Edit Profile */}
           <Button
             title="Edit Profile"
             variant="outline"
             onPress={() => router.push('/(app)/edit-profile')}
           />
-
-          {/* Logout */}
           <Button
             title="Sign Out"
             variant="outline"
             onPress={handleLogout}
-            className="border-danger"
+            style={{ borderColor: '#F5DCD8' }}
           />
         </View>
       </ScrollView>

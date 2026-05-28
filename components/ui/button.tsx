@@ -1,39 +1,72 @@
 import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { Colors } from '@/constants/colors';
 
+type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'destructive';
+
 interface ButtonProps {
   onPress: () => void;
   title: string;
-  variant?: 'primary' | 'outline' | 'ghost';
+  variant?: ButtonVariant;
   loading?: boolean;
   disabled?: boolean;
   className?: string;
+  style?: object;
 }
 
-export function Button({ onPress, title, variant = 'primary', loading, disabled, className }: ButtonProps) {
-  const base = 'flex-row items-center justify-center rounded-xl px-6 py-3.5 active:opacity-80';
-  const variants = {
-    primary: 'bg-primary',
-    outline: 'border border-primary bg-transparent',
-    ghost: 'bg-transparent',
-  };
-  const textVariants = {
-    primary: 'text-white font-semibold text-base',
-    outline: 'text-primary font-semibold text-base',
-    ghost: 'text-primary font-medium text-base',
-  };
+export function Button({
+  onPress,
+  title,
+  variant = 'primary',
+  loading,
+  disabled,
+  className,
+  style,
+}: ButtonProps) {
+  const containerStyle = (() => {
+    switch (variant) {
+      case 'primary':
+        return { backgroundColor: Colors.primary };
+      case 'outline':
+        return { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border };
+      case 'ghost':
+        return { backgroundColor: 'transparent' };
+      case 'destructive':
+        return { backgroundColor: Colors.error };
+    }
+  })();
+
+  const textColor = (() => {
+    switch (variant) {
+      case 'primary':     return Colors.primaryOn;
+      case 'outline':     return Colors.ink;
+      case 'ghost':       return Colors.primary;
+      case 'destructive': return Colors.errorOn;
+    }
+  })();
+
+  const spinnerColor = (() => {
+    switch (variant) {
+      case 'primary':     return Colors.primaryOn;
+      case 'outline':     return Colors.primary;
+      case 'ghost':       return Colors.primary;
+      case 'destructive': return Colors.errorOn;
+    }
+  })();
 
   return (
     <TouchableOpacity
-      className={`${base} ${variants[variant]} ${disabled || loading ? 'opacity-50' : ''} ${className || ''}`}
+      className={`flex-row items-center justify-center rounded-xl px-6 py-3.5 ${disabled || loading ? 'opacity-50' : ''} ${className || ''}`}
+      style={[containerStyle, style]}
       onPress={onPress}
       disabled={disabled || loading}
       activeOpacity={0.8}
     >
       {loading ? (
-        <ActivityIndicator color={variant === 'primary' ? Colors.primaryForeground : Colors.primary} size="small" />
+        <ActivityIndicator color={spinnerColor} size="small" />
       ) : (
-        <Text className={textVariants[variant]}>{title}</Text>
+        <Text className="text-base font-semibold" style={{ color: textColor }}>
+          {title}
+        </Text>
       )}
     </TouchableOpacity>
   );

@@ -1,6 +1,8 @@
 import { Component, ReactNode } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Button } from '@/components/ui/button';
+import { AlertIcon } from '@/components/icons';
+import { Colors } from '@/constants/colors';
 
 interface Props {
   children: ReactNode;
@@ -40,20 +42,25 @@ export class ErrorBoundary extends Component<Props, State> {
     }
 
     return (
-      <View className="flex-1 bg-background items-center justify-center px-6">
-        <Text className="text-5xl mb-4">💥</Text>
-        <Text className="text-xl font-bold text-foreground text-center mb-2">
+      <View
+        className="flex-1 items-center justify-center px-6"
+        style={{ backgroundColor: Colors.bg }}
+      >
+        <AlertIcon size={48} color={Colors.error} />
+        <Text className="text-xl font-bold text-center mt-4 mb-2" style={{ color: Colors.ink }}>
           Something went wrong
         </Text>
-        <Text className="text-sm text-muted-foreground text-center mb-6">
+        <Text className="text-sm text-center mb-6" style={{ color: Colors.inkMuted }}>
           An unexpected error occurred. Please try again.
         </Text>
         {__DEV__ && this.state.error ? (
           <ScrollView
             className="w-full max-h-40 mb-6 rounded-xl p-3"
-            style={{ backgroundColor: 'rgba(196,69,54,0.1)' }}
+            style={{ backgroundColor: Colors.errorBg }}
           >
-            <Text className="text-xs text-danger font-mono">{this.state.error.message}</Text>
+            <Text className="text-xs font-mono" style={{ color: Colors.error }}>
+              {this.state.error.message}
+            </Text>
           </ScrollView>
         ) : null}
         <Button title="Try Again" onPress={this.reset} />

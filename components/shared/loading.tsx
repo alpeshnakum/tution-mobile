@@ -8,9 +8,12 @@ interface LoadingProps {
 
 export function Loading({ message = 'Loading...', fullScreen }: LoadingProps) {
   return (
-    <View className={`items-center justify-center gap-3 ${fullScreen ? 'flex-1 bg-background' : 'py-12'}`}>
+    <View
+      className={`items-center justify-center gap-3 ${fullScreen ? 'flex-1' : 'py-12'}`}
+      style={fullScreen ? { backgroundColor: Colors.bg } : undefined}
+    >
       <ActivityIndicator size="large" color={Colors.primary} />
-      <Text className="text-muted-foreground text-sm">{message}</Text>
+      <Text className="text-sm" style={{ color: Colors.inkMuted }}>{message}</Text>
     </View>
   );
 }

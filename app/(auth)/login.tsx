@@ -9,6 +9,7 @@ import { getErrorMessage } from '@/lib/api';
 import { checkBiometricAvailable, authenticateWithBiometric } from '@/hooks/use-biometric';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { GradCapIcon } from '@/components/icons';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -62,7 +63,7 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-background"
+      style={{ flex: 1, backgroundColor: '#FAF9F5' }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
@@ -72,11 +73,14 @@ export default function LoginScreen() {
         <View className="flex-1 px-6 pt-20 pb-8">
           {/* Logo / Branding */}
           <View className="items-center mb-10">
-            <View className="w-20 h-20 bg-primary rounded-3xl items-center justify-center mb-4 shadow-lg">
-              <Text className="text-4xl">🎓</Text>
+            <View
+              className="w-20 h-20 rounded-3xl items-center justify-center mb-4"
+              style={{ backgroundColor: '#CC785C' }}
+            >
+              <GradCapIcon size={36} color="#FFFFFF" />
             </View>
-            <Text className="text-3xl font-bold text-foreground">Student Portal</Text>
-            <Text className="text-muted-foreground text-base mt-1">Sign in to your account</Text>
+            <Text className="text-3xl font-bold text-slate-900">Student Portal</Text>
+            <Text className="text-slate-500 text-base mt-1">Sign in to your account</Text>
           </View>
 
           {/* Form */}
@@ -109,7 +113,9 @@ export default function LoginScreen() {
               className="items-center py-2"
               onPress={() => router.push('/(auth)/forgot-password')}
             >
-              <Text className="text-sm text-primary font-medium">Forgot Password?</Text>
+              <Text className="text-sm font-medium" style={{ color: '#CC785C' }}>
+                Forgot Password?
+              </Text>
             </TouchableOpacity>
             {biometricAvailable && (
               <TouchableOpacity
@@ -118,10 +124,13 @@ export default function LoginScreen() {
                 disabled={biometricLoading}
                 activeOpacity={0.7}
               >
-                <View className="w-14 h-14 rounded-full bg-primary-light items-center justify-center">
-                  <Text className="text-3xl">🔐</Text>
+                <View
+                  className="w-14 h-14 rounded-full items-center justify-center"
+                  style={{ backgroundColor: '#F5F4EE' }}
+                >
+                  <GradCapIcon size={24} color="#CC785C" />
                 </View>
-                <Text className="text-sm text-muted-foreground">
+                <Text className="text-sm text-slate-500">
                   {biometricLoading ? 'Authenticating...' : 'Sign in with biometrics'}
                 </Text>
               </TouchableOpacity>
@@ -130,7 +139,7 @@ export default function LoginScreen() {
 
           {/* Footer */}
           <View className="flex-1 justify-end items-center">
-            <Text className="text-muted-foreground text-sm text-center">
+            <Text className="text-slate-400 text-sm text-center">
               Contact your school administrator{'\n'}if you need help logging in.
             </Text>
           </View>

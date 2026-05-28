@@ -5,16 +5,17 @@ import { ScreenHeader } from '@/components/shared/screen-header';
 import { ErrorView } from '@/components/shared/error-view';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { NotificationsIcon } from '@/components/icons';
 import { format } from 'date-fns';
 import type { NotificationItem } from '@/lib/types';
 
-const typeConfig: Record<string, { emoji: string; label: string }> = {
-  fee_reminder: { emoji: '💳', label: 'Fee Reminder' },
-  exam_notice: { emoji: '📝', label: 'Exam Notice' },
-  attendance_alert: { emoji: '📅', label: 'Attendance Alert' },
-  result_published: { emoji: '📊', label: 'Result Published' },
-  announcement: { emoji: '📢', label: 'Announcement' },
-  promotion: { emoji: '🎓', label: 'Promotion' },
+const typeLabel: Record<string, string> = {
+  fee_reminder:     'Fee Reminder',
+  exam_notice:      'Exam Notice',
+  attendance_alert: 'Attendance Alert',
+  result_published: 'Result Published',
+  announcement:     'Announcement',
+  promotion:        'Promotion',
 };
 
 export default function NotificationDetailScreen() {
@@ -29,38 +30,41 @@ export default function NotificationDetailScreen() {
   } catch {
     return <ErrorView message="Failed to load notification" onRetry={() => router.back()} />;
   }
-  const config = typeConfig[notification.type] ?? { emoji: '🔔', label: notification.type };
+  const label = typeLabel[notification.type] ?? notification.type;
   const isUnread = notification.status === 'pending' || notification.status === 'sent';
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF9F5' }}>
       <ScreenHeader title="Notification" showBack />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-4 py-6 gap-5">
           <View className="items-center gap-3">
-            <View className="w-16 h-16 rounded-full bg-primary-light items-center justify-center">
-              <Text className="text-3xl">{config.emoji}</Text>
+            <View
+              className="w-16 h-16 rounded-full items-center justify-center"
+              style={{ backgroundColor: '#F5F4EE' }}
+            >
+              <NotificationsIcon size={32} color="#CC785C" />
             </View>
-            <Text className="text-lg font-semibold text-foreground text-center leading-6">
+            <Text className="text-lg font-semibold text-slate-900 text-center leading-6">
               {notification.title}
             </Text>
-            <Badge label={config.label} variant="primary" />
+            <Badge label={label} variant="primary" />
           </View>
 
           <Card>
-            <Text className="text-sm text-foreground leading-6">{notification.message}</Text>
+            <Text className="text-sm text-slate-600 leading-6">{notification.message}</Text>
           </Card>
 
           <Card>
             <View className="gap-3">
               <View className="flex-row items-center justify-between">
-                <Text className="text-xs font-medium text-muted-foreground">Received</Text>
-                <Text className="text-xs text-foreground">
+                <Text className="text-xs font-medium text-slate-500">Received</Text>
+                <Text className="text-xs text-slate-800">
                   {format(new Date(notification.createdAt), 'dd MMM yyyy, hh:mm a')}
                 </Text>
               </View>
               <View className="flex-row items-center justify-between">
-                <Text className="text-xs font-medium text-muted-foreground">Status</Text>
+                <Text className="text-xs font-medium text-slate-500">Status</Text>
                 <Badge
                   label={isUnread ? 'Unread' : 'Read'}
                   variant={isUnread ? 'warning' : 'success'}
@@ -68,8 +72,8 @@ export default function NotificationDetailScreen() {
               </View>
               {notification.readAt && (
                 <View className="flex-row items-center justify-between">
-                  <Text className="text-xs font-medium text-muted-foreground">Read at</Text>
-                  <Text className="text-xs text-foreground">
+                  <Text className="text-xs font-medium text-slate-500">Read at</Text>
+                  <Text className="text-xs text-slate-800">
                     {format(new Date(notification.readAt), 'dd MMM yyyy, hh:mm a')}
                   </Text>
                 </View>

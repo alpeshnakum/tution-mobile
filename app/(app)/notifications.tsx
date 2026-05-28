@@ -6,16 +6,17 @@ import { ErrorView } from '@/components/shared/error-view';
 import { SkeletonList } from '@/components/shared/skeleton';
 import { Card } from '@/components/ui/card';
 import { ScreenHeader } from '@/components/shared/screen-header';
+import { NotificationsIcon } from '@/components/icons';
 import { format } from 'date-fns';
 import type { NotificationItem } from '@/lib/types';
 
-const typeConfig: Record<string, { emoji: string; label: string }> = {
-  fee_reminder: { emoji: '💳', label: 'Fee Reminder' },
-  exam_notice: { emoji: '📝', label: 'Exam Notice' },
-  attendance_alert: { emoji: '📅', label: 'Attendance Alert' },
-  result_published: { emoji: '📊', label: 'Result Published' },
-  announcement: { emoji: '📢', label: 'Announcement' },
-  promotion: { emoji: '🎓', label: 'Promotion' },
+const typeLabel: Record<string, string> = {
+  fee_reminder:      'Fee Reminder',
+  exam_notice:       'Exam Notice',
+  attendance_alert:  'Attendance Alert',
+  result_published:  'Result Published',
+  announcement:      'Announcement',
+  promotion:         'Promotion',
 };
 
 function NotificationCard({
@@ -26,7 +27,7 @@ function NotificationCard({
   onRead: (id: string) => void;
 }) {
   const isUnread = item.status === 'pending' || item.status === 'sent';
-  const config = typeConfig[item.type] ?? { emoji: '🔔', label: item.type };
+  const label = typeLabel[item.type] ?? item.type;
   const router = useRouter();
 
   return (
@@ -39,22 +40,28 @@ function NotificationCard({
     >
       <Card>
         <View className="flex-row gap-3">
-          <View className={`w-10 h-10 rounded-full items-center justify-center ${isUnread ? 'bg-primary-light' : 'bg-background'}`}>
-            <Text className="text-xl">{config.emoji}</Text>
+          <View
+            className="w-10 h-10 rounded-full items-center justify-center"
+            style={{ backgroundColor: isUnread ? '#F5F4EE' : '#F0EEE6' }}
+          >
+            <NotificationsIcon size={20} color={isUnread ? '#CC785C' : '#6B6862'} />
           </View>
           <View className="flex-1 gap-1">
             <View className="flex-row items-start justify-between gap-2">
-              <Text className={`flex-1 text-sm leading-5 ${isUnread ? 'font-semibold text-foreground' : 'font-medium text-foreground'}`}>
+              <Text
+                className="flex-1 text-sm leading-5"
+                style={{ fontWeight: isUnread ? '600' : '500', color: '###1F1E1D' }}
+              >
                 {item.title}
               </Text>
               {isUnread && (
-                <View className="w-2 h-2 rounded-full bg-primary mt-1.5" />
+                <View className="w-2.5 h-2.5 rounded-full mt-1.5" style={{ backgroundColor: '#CC785C' }} />
               )}
             </View>
-            <Text className="text-xs text-muted-foreground leading-4">{item.message}</Text>
+            <Text className="text-xs text-slate-500 leading-4">{item.message}</Text>
             <View className="flex-row items-center justify-between mt-0.5">
-              <Text className="text-xs text-primary">{config.label}</Text>
-              <Text className="text-xs text-muted-foreground">
+              <Text className="text-xs" style={{ color: '#CC785C' }}>{label}</Text>
+              <Text className="text-xs text-slate-400">
                 {format(new Date(item.createdAt), 'dd MMM, hh:mm a')}
               </Text>
             </View>
@@ -78,8 +85,8 @@ export default function NotificationsScreen() {
   };
 
   if (loading && !data.notifications.length) return (
-    <SafeAreaView className="flex-1 bg-background">
-      <ScreenHeader title="Notifications" />
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF9F5' }}>
+      <ScreenHeader title="Notifications" showMenu />
       <View className="px-4 py-4">
         <SkeletonList count={6} />
       </View>
@@ -88,8 +95,8 @@ export default function NotificationsScreen() {
   if (error && !data.notifications.length) return <ErrorView message={error} onRetry={refetch} />;
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <ScreenHeader title="Notifications" />
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF9F5' }}>
+      <ScreenHeader title="Notifications" showMenu />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
@@ -97,17 +104,19 @@ export default function NotificationsScreen() {
         <View className="px-4 py-4 gap-3">
           {data.unreadCount > 0 && (
             <View className="flex-row items-center justify-between px-1">
-              <Text className="text-xs text-muted-foreground">{data.unreadCount} unread</Text>
+              <Text className="text-xs text-slate-500">{data.unreadCount} unread</Text>
               <TouchableOpacity onPress={handleMarkAllRead} activeOpacity={0.7}>
-                <Text className="text-xs font-semibold text-primary">Mark all read</Text>
+                <Text className="text-xs font-semibold" style={{ color: '#CC785C' }}>
+                  Mark all read
+                </Text>
               </TouchableOpacity>
             </View>
           )}
 
           {data.notifications.length === 0 ? (
             <View className="py-16 items-center gap-3">
-              <Text className="text-4xl">🔔</Text>
-              <Text className="text-muted-foreground text-base">No notifications yet</Text>
+              <NotificationsIcon size={48} color="#6B6862" />
+              <Text className="text-slate-500 text-base">No notifications yet</Text>
             </View>
           ) : (
             data.notifications.map((item) => (
