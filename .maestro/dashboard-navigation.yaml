@@ -1,0 +1,19 @@
+appId: com.nothingtest.oac.mobile
+---
+- launchApp
+- waitForAnimationToEnd
+- assertVisible: "Welcome back,"
+- scrollUntilVisible:
+    element:
+      text: "Fee Summary"
+    direction: DOWN
+- assertVisible: "Fee Summary"
+- scrollUntilVisible:
+    element:
+      text: "Upcoming Exams"
+    direction: DOWN
+- tapOn:
+    text: "Attendance"
+- waitForAnimationToEnd
+- assertVisible: "Attendance"
+- back:

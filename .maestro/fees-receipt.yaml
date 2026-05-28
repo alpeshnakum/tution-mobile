@@ -1,0 +1,13 @@
+appId: com.nothingtest.oac.mobile
+---
+- launchApp
+- waitForAnimationToEnd
+- tapOn:
+    text: "Fees"
+- waitForAnimationToEnd
+- assertVisible: "Fee Summary"
+- scrollUntilVisible:
+    element:
+      text: "Payment History"
+    direction: DOWN
+- assertVisible: "Payment History"

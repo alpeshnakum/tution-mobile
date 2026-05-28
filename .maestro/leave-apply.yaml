@@ -1,0 +1,26 @@
+appId: com.nothingtest.oac.mobile
+---
+- launchApp
+- waitForAnimationToEnd
+- tapOn:
+    text: "Leaves"
+- waitForAnimationToEnd
+- assertVisible: "Leave Requests"
+- tapOn:
+    text: "Apply"
+- waitForAnimationToEnd
+- assertVisible: "Apply for Leave"
+- tapOn:
+    text: "sick"
+- tapOn:
+    text: "From Date"
+- inputText: "2026-06-01"
+- tapOn:
+    text: "To Date"
+- inputText: "2026-06-01"
+- tapOn:
+    text: "Describe the reason"
+- inputText: "Medical appointment with doctor"
+- tapOn:
+    text: "Submit Leave Request"
+- waitForAnimationToEnd

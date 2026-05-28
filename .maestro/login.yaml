@@ -1,0 +1,15 @@
+appId: com.nothingtest.oac.mobile
+---
+- launchApp
+- assertVisible: "Student Portal"
+- assertVisible: "Sign in to your account"
+- tapOn:
+    text: "Username or Email"
+- inputText: "testStudent"
+- tapOn:
+    text: "Password"
+- inputText: "Test@1234"
+- tapOn:
+    text: "Sign In"
+- waitForAnimationToEnd
+- assertVisible: "Welcome back,"
