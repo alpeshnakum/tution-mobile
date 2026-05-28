@@ -1,6 +1,6 @@
 # OAC Mobile — Full Project Progress
 
-> **Last updated:** 2026-05-28 (session 2)
+> **Last updated:** 2026-05-28 (session 3)
 > **App name:** OAC Student Portal
 > **Platform:** React Native (Expo ~54.0.0, SDK 54), TypeScript
 > **Scope:** Student + Parent portal (student primary, parent can select child)
@@ -479,3 +479,4 @@ The `api.ts` client falls back to `http://localhost:3000` if `EXPO_PUBLIC_API_UR
 | `sectionId` not set | Low | `setStudentMeta` called with empty string for `sectionId` in dashboard — timetable may fail if sectionId required |
 | No form validation | Medium | Change-password, edit-profile use manual state — no validation library |
 | No offline support | Low | All screens show error if network unavailable — no cached data fallback |
+| Web support / SecureStore | ✅ Fixed | `expo-secure-store` has no web support; now falls back to `localStorage` transparently |
