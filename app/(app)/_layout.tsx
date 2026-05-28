@@ -1,8 +1,9 @@
 import { Tabs, useRouter } from 'expo-router';
-import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { useEffect } from 'react';
 import { Colors } from '@/constants/colors';
 import { useAuthStore } from '@/lib/auth-store';
+import { NoInternetBanner } from '@/components/shared/no-internet-banner';
 
 function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
   return (
@@ -21,7 +22,9 @@ export default function AppLayout() {
   }, [user?.role, user, studentId]);
 
   return (
-    <Tabs
+    <View className="flex-1">
+      <NoInternetBanner />
+      <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: Colors.primary,
@@ -114,5 +117,6 @@ export default function AppLayout() {
         }}
       />
     </Tabs>
+    </View>
   );
 }

@@ -40,7 +40,7 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-slate-50"
+      className="flex-1 bg-background"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
@@ -50,11 +50,11 @@ export default function LoginScreen() {
         <View className="flex-1 px-6 pt-20 pb-8">
           {/* Logo / Branding */}
           <View className="items-center mb-10">
-            <View className="w-20 h-20 bg-indigo-500 rounded-3xl items-center justify-center mb-4 shadow-lg">
+            <View className="w-20 h-20 bg-primary rounded-3xl items-center justify-center mb-4 shadow-lg">
               <Text className="text-4xl">🎓</Text>
             </View>
-            <Text className="text-3xl font-bold text-slate-900">Student Portal</Text>
-            <Text className="text-slate-500 text-base mt-1">Sign in to your account</Text>
+            <Text className="text-3xl font-bold text-foreground">Student Portal</Text>
+            <Text className="text-muted-foreground text-base mt-1">Sign in to your account</Text>
           </View>
 
           {/* Form */}
@@ -87,13 +87,13 @@ export default function LoginScreen() {
               className="items-center py-2"
               onPress={() => router.push('/(auth)/forgot-password')}
             >
-              <Text className="text-sm text-indigo-500 font-medium">Forgot Password?</Text>
+              <Text className="text-sm text-primary font-medium">Forgot Password?</Text>
             </TouchableOpacity>
           </View>
 
           {/* Footer */}
           <View className="flex-1 justify-end items-center">
-            <Text className="text-slate-400 text-sm text-center">
+            <Text className="text-muted-foreground text-sm text-center">
               Contact your school administrator{'\n'}if you need help logging in.
             </Text>
           </View>

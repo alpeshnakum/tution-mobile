@@ -39,7 +39,7 @@ export default function HomeworkDetailScreen() {
   const status = statusConfig[hw.status] ?? { label: hw.status, variant: 'default' as const };
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title={hw.title} showBack />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-4 py-4 gap-4">
@@ -49,9 +49,9 @@ export default function HomeworkDetailScreen() {
           </View>
 
           <Card>
-            <Text className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Due Date</Text>
+            <Text className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Due Date</Text>
             <View className="flex-row items-center justify-between">
-              <Text className="text-sm font-semibold text-slate-900">
+              <Text className="text-sm font-semibold text-foreground">
                 {format(new Date(hw.dueDate), 'EEE, dd MMM yyyy')}
               </Text>
               <Badge label={due.label} variant={due.variant} />
@@ -59,8 +59,8 @@ export default function HomeworkDetailScreen() {
           </Card>
 
           <Card>
-            <Text className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Description</Text>
-            <Text className="text-sm text-slate-700 leading-relaxed">
+            <Text className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Description</Text>
+            <Text className="text-sm text-foreground leading-relaxed">
               {hw.description ? hw.description : 'No description provided'}
             </Text>
           </Card>
@@ -69,16 +69,16 @@ export default function HomeworkDetailScreen() {
             <Card>
               <View className="flex-row items-center justify-between">
                 <View className="gap-1">
-                  <Text className="text-sm font-semibold text-slate-900">Graded Assignment</Text>
+                  <Text className="text-sm font-semibold text-foreground">Graded Assignment</Text>
                   {hw.maxMarks ? (
-                    <Text className="text-xs text-slate-500">Maximum marks: {hw.maxMarks}</Text>
+                    <Text className="text-xs text-muted-foreground">Maximum marks: {hw.maxMarks}</Text>
                   ) : null}
                 </View>
-                <View className="bg-indigo-50 rounded-lg px-3 py-2">
+                <View className="bg-primary-light rounded-lg px-3 py-2">
                   {hw.maxMarks ? (
-                    <Text className="text-base font-bold text-indigo-600">{hw.maxMarks}</Text>
+                    <Text className="text-base font-bold text-primary">{hw.maxMarks}</Text>
                   ) : null}
-                  <Text className="text-xs text-indigo-400 text-center">marks</Text>
+                  <Text className="text-xs text-primary text-center">marks</Text>
                 </View>
               </View>
             </Card>
@@ -88,13 +88,13 @@ export default function HomeworkDetailScreen() {
             <View
               className={`w-2 h-2 rounded-full ${
                 hw.status === 'submitted'
-                  ? 'bg-green-500'
+                  ? 'bg-success'
                   : hw.status === 'overdue'
-                  ? 'bg-red-500'
-                  : 'bg-yellow-500'
+                  ? 'bg-danger'
+                  : 'bg-warning'
               }`}
             />
-            <Text className="text-sm text-slate-500">{status.label}</Text>
+            <Text className="text-sm text-muted-foreground">{status.label}</Text>
           </View>
         </View>
       </ScrollView>

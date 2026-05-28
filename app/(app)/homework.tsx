@@ -3,8 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { useHomework } from '@/hooks/use-homework';
-import { Loading } from '@/components/shared/loading';
 import { ErrorView } from '@/components/shared/error-view';
+import { SkeletonList } from '@/components/shared/skeleton';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScreenHeader } from '@/components/shared/screen-header';
@@ -16,14 +16,21 @@ export default function HomeworkScreen() {
   const branchId = user?.branchId ?? null;
   const { data, loading, error, refetch } = useHomework(studentClassId, branchId, studentSectionId);
 
-  if (loading && !data.length) return <Loading fullScreen message="Loading homework..." />;
+  if (loading && !data.length) return (
+    <SafeAreaView className="flex-1 bg-background">
+      <ScreenHeader title="Homework" showBack />
+      <View className="px-4 py-4">
+        <SkeletonList count={5} />
+      </View>
+    </SafeAreaView>
+  );
   if (error && !data.length) return <ErrorView message={error} onRetry={refetch} />;
   if (!studentClassId) return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Homework" showBack />
       <View className="flex-1 items-center justify-center gap-3">
         <Text className="text-4xl">📚</Text>
-        <Text className="text-slate-500 text-base">No class assigned yet</Text>
+        <Text className="text-muted-foreground text-base">No class assigned yet</Text>
       </View>
     </SafeAreaView>
   );
@@ -37,7 +44,7 @@ export default function HomeworkScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Homework" showBack />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -47,8 +54,8 @@ export default function HomeworkScreen() {
           {data.length === 0 ? (
             <View className="py-16 items-center gap-3">
               <Text className="text-4xl">🎉</Text>
-              <Text className="text-slate-500 text-base font-medium">No pending homework!</Text>
-              <Text className="text-slate-400 text-sm">You're all caught up</Text>
+              <Text className="text-muted-foreground text-base font-medium">No pending homework!</Text>
+              <Text className="text-muted-foreground text-sm">You're all caught up</Text>
             </View>
           ) : (
             data.map((hw) => {
@@ -64,15 +71,15 @@ export default function HomeworkScreen() {
                       <Badge label={hw.subjectName} variant="primary" />
                       <Badge label={due.label} variant={due.variant} />
                     </View>
-                    <Text className="text-sm font-semibold text-slate-900 mt-1">{hw.title}</Text>
+                    <Text className="text-sm font-semibold text-foreground mt-1">{hw.title}</Text>
                     {hw.description ? (
-                      <Text className="text-xs text-slate-500 mt-1" numberOfLines={2}>{hw.description}</Text>
+                      <Text className="text-xs text-muted-foreground mt-1" numberOfLines={2}>{hw.description}</Text>
                     ) : null}
-                    <View className="flex-row items-center justify-between mt-3 pt-2 border-t border-slate-100">
-                      <Text className="text-xs text-slate-400">Due: {format(new Date(hw.dueDate), 'EEE, dd MMM yyyy')}</Text>
+                    <View className="flex-row items-center justify-between mt-3 pt-2 border-t border-border">
+                      <Text className="text-xs text-muted-foreground">Due: {format(new Date(hw.dueDate), 'EEE, dd MMM yyyy')}</Text>
                       <View className="flex-row items-center gap-2">
-                        {hw.isGraded && hw.maxMarks ? <Text className="text-xs text-indigo-500 font-medium">{hw.maxMarks} marks</Text> : null}
-                        <Text className="text-slate-300">›</Text>
+                        {hw.isGraded && hw.maxMarks ? <Text className="text-xs text-primary font-medium">{hw.maxMarks} marks</Text> : null}
+                        <Text className="text-muted-foreground">›</Text>
                       </View>
                     </View>
                   </Card>

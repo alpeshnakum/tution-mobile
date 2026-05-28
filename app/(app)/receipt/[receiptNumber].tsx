@@ -18,8 +18,8 @@ const methodLabel: Record<string, string> = {
 function Row({ label, value, bold }: { label: string; value: string; bold?: boolean }) {
   return (
     <View className="flex-row justify-between py-1.5">
-      <Text className="text-sm text-slate-500">{label}</Text>
-      <Text className={`text-sm ${bold ? 'font-bold text-slate-900' : 'text-slate-800'}`}>
+      <Text className="text-sm text-muted-foreground">{label}</Text>
+      <Text className={`text-sm ${bold ? 'font-bold text-foreground' : 'text-foreground'}`}>
         {value}
       </Text>
     </View>
@@ -27,7 +27,7 @@ function Row({ label, value, bold }: { label: string; value: string; bold?: bool
 }
 
 function Divider() {
-  return <View className="h-px bg-slate-100 my-1" />;
+  return <View className="h-px bg-border my-1" />;
 }
 
 export default function ReceiptScreen() {
@@ -39,16 +39,16 @@ export default function ReceiptScreen() {
   if (!data) return null;
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Receipt" subtitle={`#${data.receiptNumber}`} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-4 py-4 gap-4">
           {/* Header Info */}
-          <View className="bg-white rounded-2xl p-4 border border-slate-100">
+          <View className="bg-white rounded-2xl p-4 border border-border">
             <View className="items-center mb-4">
               <Text className="text-2xl mb-1">🧾</Text>
-              <Text className="text-lg font-bold text-slate-900">{data.receiptNumber}</Text>
-              <Text className="text-sm text-slate-500 mt-0.5">
+              <Text className="text-lg font-bold text-foreground">{data.receiptNumber}</Text>
+              <Text className="text-sm text-muted-foreground mt-0.5">
                 {format(new Date(data.paymentDate), 'dd MMM yyyy')}
               </Text>
             </View>
@@ -63,10 +63,10 @@ export default function ReceiptScreen() {
           </View>
 
           {/* Fee Breakdown */}
-          <View className="bg-white rounded-2xl p-4 border border-slate-100">
-            <Text className="text-sm font-semibold text-slate-700 mb-3">Fee Breakdown</Text>
+          <View className="bg-white rounded-2xl p-4 border border-border">
+            <Text className="text-sm font-semibold text-foreground mb-3">Fee Breakdown</Text>
             {(data.feeBreakdown ?? []).length === 0 ? (
-              <Text className="text-xs text-slate-400 text-center py-2">No breakdown available</Text>
+              <Text className="text-xs text-muted-foreground text-center py-2">No breakdown available</Text>
             ) : (
               (data.feeBreakdown ?? []).map((item, idx) => (
                 <Row key={idx} label={item.feeHeadName} value={`₹${item.amount.toLocaleString('en-IN')}`} />
@@ -88,8 +88,8 @@ export default function ReceiptScreen() {
           </View>
 
           {/* Payment Summary */}
-          <View className="bg-white rounded-2xl p-4 border border-slate-100">
-            <Text className="text-sm font-semibold text-slate-700 mb-3">Payment Summary</Text>
+          <View className="bg-white rounded-2xl p-4 border border-border">
+            <Text className="text-sm font-semibold text-foreground mb-3">Payment Summary</Text>
             <Row label="Amount Paid" value={`₹${data.amountPaid.toLocaleString('en-IN')}`} bold />
             {data.dueAmount > 0 && (
               <Row label="Remaining Due" value={`₹${data.dueAmount.toLocaleString('en-IN')}`} />

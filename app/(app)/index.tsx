@@ -27,19 +27,19 @@ export default function HomeScreen() {
   const dashboard = data;
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
       >
         {/* Header */}
         <View className="px-5 pt-4 pb-2">
-          <Text className="text-slate-500 text-sm">Welcome back,</Text>
-          <Text className="text-2xl font-bold text-slate-900">
+          <Text className="text-muted-foreground text-sm">Welcome back,</Text>
+          <Text className="text-2xl font-bold text-foreground">
             {dashboard?.student.name || `${user?.firstName} ${user?.lastName}`}
           </Text>
           {dashboard?.student.className && (
-            <Text className="text-slate-500 text-sm mt-0.5">{dashboard.student.className}</Text>
+            <Text className="text-muted-foreground text-sm mt-0.5">{dashboard.student.className}</Text>
           )}
         </View>
 
@@ -48,23 +48,23 @@ export default function HomeScreen() {
           {dashboard?.attendance && (
             <Card>
               <View className="flex-row items-center justify-between mb-3">
-                <Text className="text-base font-semibold text-slate-900">Attendance</Text>
-                <Text className="text-xs text-slate-500">{dashboard.attendance.month}</Text>
+                <Text className="text-base font-semibold text-foreground">Attendance</Text>
+                <Text className="text-xs text-muted-foreground">{dashboard.attendance.month}</Text>
               </View>
               <View className="flex-row gap-3">
-                <View className="flex-1 bg-slate-50 rounded-xl p-3 items-center">
-                  <Text className="text-2xl font-bold text-indigo-600">
+                <View className="flex-1 bg-primary-light rounded-xl p-3 items-center">
+                  <Text className="text-2xl font-bold text-primary">
                     {dashboard.attendance.percentage}%
                   </Text>
-                  <Text className="text-xs text-slate-500 mt-0.5">Overall</Text>
+                  <Text className="text-xs text-muted-foreground mt-0.5">Overall</Text>
                 </View>
-                <View className="flex-1 bg-green-50 rounded-xl p-3 items-center">
-                  <Text className="text-2xl font-bold text-green-600">{dashboard.attendance.present}</Text>
-                  <Text className="text-xs text-slate-500 mt-0.5">Present</Text>
+                <View className="flex-1 bg-success-light rounded-xl p-3 items-center">
+                  <Text className="text-2xl font-bold text-success">{dashboard.attendance.present}</Text>
+                  <Text className="text-xs text-muted-foreground mt-0.5">Present</Text>
                 </View>
-                <View className="flex-1 bg-red-50 rounded-xl p-3 items-center">
-                  <Text className="text-2xl font-bold text-red-500">{dashboard.attendance.absent}</Text>
-                  <Text className="text-xs text-slate-500 mt-0.5">Absent</Text>
+                <View className="flex-1 bg-danger-light rounded-xl p-3 items-center">
+                  <Text className="text-2xl font-bold text-danger">{dashboard.attendance.absent}</Text>
+                  <Text className="text-xs text-muted-foreground mt-0.5">Absent</Text>
                 </View>
               </View>
             </Card>
@@ -73,24 +73,24 @@ export default function HomeScreen() {
           {/* Fees Card */}
           {dashboard?.fees && (
             <Card>
-              <Text className="text-base font-semibold text-slate-900 mb-3">Fee Summary</Text>
+              <Text className="text-base font-semibold text-foreground mb-3">Fee Summary</Text>
               <View className="gap-2">
                 <View className="flex-row justify-between">
-                  <Text className="text-slate-500 text-sm">Total Paid</Text>
-                  <Text className="font-semibold text-green-600 text-sm">
+                  <Text className="text-muted-foreground text-sm">Total Paid</Text>
+                  <Text className="font-semibold text-success text-sm">
                     ₹{dashboard.fees.totalPaid.toLocaleString('en-IN')}
                   </Text>
                 </View>
                 <View className="flex-row justify-between">
-                  <Text className="text-slate-500 text-sm">Total Due</Text>
-                  <Text className={`font-semibold text-sm ${dashboard.fees.totalDue > 0 ? 'text-red-500' : 'text-green-600'}`}>
+                  <Text className="text-muted-foreground text-sm">Total Due</Text>
+                  <Text className={`font-semibold text-sm ${dashboard.fees.totalDue > 0 ? 'text-danger' : 'text-success'}`}>
                     ₹{dashboard.fees.totalDue.toLocaleString('en-IN')}
                   </Text>
                 </View>
-                <View className="h-px bg-slate-100 my-1" />
+                <View className="h-px bg-border my-1" />
                 <View className="flex-row justify-between">
-                  <Text className="text-slate-700 text-sm font-medium">Total Expected</Text>
-                  <Text className="font-semibold text-slate-900 text-sm">
+                  <Text className="text-foreground text-sm font-medium">Total Expected</Text>
+                  <Text className="font-semibold text-foreground text-sm">
                     ₹{dashboard.fees.totalExpected.toLocaleString('en-IN')}
                   </Text>
                 </View>
@@ -101,19 +101,19 @@ export default function HomeScreen() {
           {/* Upcoming Exams */}
           {(dashboard?.upcomingExams?.length ?? 0) > 0 && (
             <Card>
-              <Text className="text-base font-semibold text-slate-900 mb-3">Upcoming Exams</Text>
+              <Text className="text-base font-semibold text-foreground mb-3">Upcoming Exams</Text>
               <View className="gap-2">
                 {(dashboard?.upcomingExams ?? []).map((exam) => (
-                  <View key={exam.id} className="flex-row items-center justify-between py-2 border-b border-slate-50">
+                  <View key={exam.id} className="flex-row items-center justify-between py-2 border-b border-border">
                     <View className="flex-1">
-                      <Text className="text-sm font-medium text-slate-800">{exam.title}</Text>
-                      <Text className="text-xs text-slate-500 mt-0.5">{exam.subject}</Text>
+                      <Text className="text-sm font-medium text-foreground">{exam.title}</Text>
+                      <Text className="text-xs text-muted-foreground mt-0.5">{exam.subject}</Text>
                     </View>
                     <View className="items-end">
-                      <Text className="text-xs font-medium text-indigo-600">
+                      <Text className="text-xs font-medium text-primary">
                         {format(new Date(exam.examDate), 'dd MMM')}
                       </Text>
-                      <Text className="text-xs text-slate-400">{exam.totalMarks} marks</Text>
+                      <Text className="text-xs text-muted-foreground">{exam.totalMarks} marks</Text>
                     </View>
                   </View>
                 ))}
@@ -124,16 +124,16 @@ export default function HomeScreen() {
           {/* Recent Results */}
           {(dashboard?.recentResults?.length ?? 0) > 0 && (
             <Card>
-              <Text className="text-base font-semibold text-slate-900 mb-3">Recent Results</Text>
+              <Text className="text-base font-semibold text-foreground mb-3">Recent Results</Text>
               <View className="gap-2">
                 {(dashboard?.recentResults ?? []).map((result, idx) => (
-                  <View key={idx} className="flex-row items-center justify-between py-2 border-b border-slate-50">
+                  <View key={idx} className="flex-row items-center justify-between py-2 border-b border-border">
                     <View className="flex-1">
-                      <Text className="text-sm font-medium text-slate-800">{result.examTitle}</Text>
-                      <Text className="text-xs text-slate-500 mt-0.5">{result.subject}</Text>
+                      <Text className="text-sm font-medium text-foreground">{result.examTitle}</Text>
+                      <Text className="text-xs text-muted-foreground mt-0.5">{result.subject}</Text>
                     </View>
                     <View className="items-end gap-1">
-                      <Text className="text-sm font-bold text-slate-900">
+                      <Text className="text-sm font-bold text-foreground">
                         {result.marksObtained}/{result.totalMarks}
                       </Text>
                       <Badge
@@ -148,51 +148,51 @@ export default function HomeScreen() {
           )}
           {/* Quick Access */}
           <View>
-            <Text className="text-sm font-semibold text-slate-700 mb-2 px-1">Quick Access</Text>
+            <Text className="text-sm font-semibold text-foreground mb-2 px-1">Quick Access</Text>
             <View className="flex-row gap-3 mb-3">
               <TouchableOpacity
-                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-border active:opacity-80"
                 onPress={() => router.push('/(app)/homework')}
               >
                 <Text className="text-3xl">📚</Text>
-                <Text className="text-xs font-semibold text-slate-700">Homework</Text>
+                <Text className="text-xs font-semibold text-foreground">Homework</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-border active:opacity-80"
                 onPress={() => router.push('/(app)/timetable')}
               >
                 <Text className="text-3xl">🗓️</Text>
-                <Text className="text-xs font-semibold text-slate-700">Timetable</Text>
+                <Text className="text-xs font-semibold text-foreground">Timetable</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-border active:opacity-80"
                 onPress={() => router.push('/(app)/leaves')}
               >
                 <Text className="text-3xl">📝</Text>
-                <Text className="text-xs font-semibold text-slate-700">Leaves</Text>
+                <Text className="text-xs font-semibold text-foreground">Leaves</Text>
               </TouchableOpacity>
             </View>
             <View className="flex-row gap-3">
               <TouchableOpacity
-                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-border active:opacity-80"
                 onPress={() => router.push('/(app)/exams')}
               >
                 <Text className="text-3xl">📋</Text>
-                <Text className="text-xs font-semibold text-slate-700">Exams</Text>
+                <Text className="text-xs font-semibold text-foreground">Exams</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-border active:opacity-80"
                 onPress={() => router.push('/(app)/notices')}
               >
                 <Text className="text-3xl">📢</Text>
-                <Text className="text-xs font-semibold text-slate-700">Notices</Text>
+                <Text className="text-xs font-semibold text-foreground">Notices</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-slate-100 active:opacity-80"
+                className="flex-1 bg-white rounded-2xl p-4 items-center gap-2 border border-border active:opacity-80"
                 onPress={() => router.push('/(app)/notifications')}
               >
                 <Text className="text-3xl">🔔</Text>
-                <Text className="text-xs font-semibold text-slate-700">Inbox</Text>
+                <Text className="text-xs font-semibold text-foreground">Inbox</Text>
               </TouchableOpacity>
             </View>
           </View>

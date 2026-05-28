@@ -56,14 +56,14 @@ export default function ForgotPasswordScreen() {
 
   return (
     <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <SafeAreaView className="flex-1 bg-slate-50">
+      <SafeAreaView className="flex-1 bg-background">
         <ScreenHeader title="Forgot Password" showBack />
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View className="px-6 pt-6 gap-5">
             {step === 1 ? (
               <>
-                <View className="bg-indigo-50 rounded-xl px-4 py-3">
-                  <Text className="text-sm text-indigo-700">Enter your username or email. We'll send an OTP to your registered email address.</Text>
+                <View className="bg-primary-light rounded-xl px-4 py-3">
+                  <Text className="text-sm text-primary">Enter your username or email. We'll send an OTP to your registered email address.</Text>
                 </View>
                 <Input
                   label="Username or Email"
@@ -73,13 +73,13 @@ export default function ForgotPasswordScreen() {
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
-                {error && <Text className="text-sm text-red-500">{error}</Text>}
+                {error && <Text className="text-sm text-danger">{error}</Text>}
                 <Button title="Send OTP" onPress={handleSendOtp} loading={loading} />
               </>
             ) : (
               <>
-                <View className="bg-green-50 rounded-xl px-4 py-3">
-                  <Text className="text-sm text-green-700">OTP sent to your registered email. Enter it below along with your new password.</Text>
+                <View className="bg-success-light rounded-xl px-4 py-3">
+                  <Text className="text-sm text-success">OTP sent to your registered email. Enter it below along with your new password.</Text>
                 </View>
                 <Input
                   label="OTP Code"
@@ -102,7 +102,7 @@ export default function ForgotPasswordScreen() {
                   onChangeText={setConfirmPassword}
                   secureTextEntry
                 />
-                {error && <Text className="text-sm text-red-500">{error}</Text>}
+                {error && <Text className="text-sm text-danger">{error}</Text>}
                 <Button title="Reset Password" onPress={handleReset} loading={loading} />
                 <Button title="Resend OTP" variant="ghost" onPress={() => { setStep(1); setOtp(''); setNewPassword(''); setConfirmPassword(''); setError(null); }} />
               </>

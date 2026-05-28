@@ -23,17 +23,17 @@ export default function AttendanceScreen() {
   if (loading && !data) return <Loading fullScreen message="Loading attendance..." />;
   if (error && !data) return <ErrorView message={error} onRetry={refetch} />;
   if (!studentId) return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Attendance" />
       <View className="flex-1 items-center justify-center gap-3">
         <Text className="text-4xl">📅</Text>
-        <Text className="text-slate-500 text-base">No student selected</Text>
+        <Text className="text-muted-foreground text-base">No student selected</Text>
       </View>
     </SafeAreaView>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Attendance" />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -43,23 +43,23 @@ export default function AttendanceScreen() {
           {/* Summary */}
           {data?.summary && (
             <Card>
-              <Text className="text-base font-semibold text-slate-900 mb-3">Summary</Text>
+              <Text className="text-base font-semibold text-foreground mb-3">Summary</Text>
               <View className="flex-row gap-2">
-                <View className="flex-1 bg-indigo-50 rounded-xl p-3 items-center">
-                  <Text className="text-xl font-bold text-indigo-600">{data.summary.percentage}%</Text>
-                  <Text className="text-xs text-slate-500 mt-0.5">Rate</Text>
+                <View className="flex-1 bg-primary-light rounded-xl p-3 items-center">
+                  <Text className="text-xl font-bold text-primary">{data.summary.percentage}%</Text>
+                  <Text className="text-xs text-muted-foreground mt-0.5">Rate</Text>
                 </View>
-                <View className="flex-1 bg-green-50 rounded-xl p-3 items-center">
-                  <Text className="text-xl font-bold text-green-600">{data.summary.present}</Text>
-                  <Text className="text-xs text-slate-500 mt-0.5">Present</Text>
+                <View className="flex-1 bg-success-light rounded-xl p-3 items-center">
+                  <Text className="text-xl font-bold text-success">{data.summary.present}</Text>
+                  <Text className="text-xs text-muted-foreground mt-0.5">Present</Text>
                 </View>
-                <View className="flex-1 bg-red-50 rounded-xl p-3 items-center">
-                  <Text className="text-xl font-bold text-red-500">{data.summary.absent}</Text>
-                  <Text className="text-xs text-slate-500 mt-0.5">Absent</Text>
+                <View className="flex-1 bg-danger-light rounded-xl p-3 items-center">
+                  <Text className="text-xl font-bold text-danger">{data.summary.absent}</Text>
+                  <Text className="text-xs text-muted-foreground mt-0.5">Absent</Text>
                 </View>
                 <View className="flex-1 bg-amber-50 rounded-xl p-3 items-center">
                   <Text className="text-xl font-bold text-amber-500">{data.summary.late}</Text>
-                  <Text className="text-xs text-slate-500 mt-0.5">Late</Text>
+                  <Text className="text-xs text-muted-foreground mt-0.5">Late</Text>
                 </View>
               </View>
             </Card>
@@ -67,14 +67,14 @@ export default function AttendanceScreen() {
 
           {/* Records */}
           <Card>
-            <Text className="text-base font-semibold text-slate-900 mb-3">Records</Text>
+            <Text className="text-base font-semibold text-foreground mb-3">Records</Text>
             {(!data?.records || data.records.length === 0) ? (
-              <Text className="text-slate-400 text-sm text-center py-4">No attendance records found</Text>
+              <Text className="text-muted-foreground text-sm text-center py-4">No attendance records found</Text>
             ) : (
               <View className="gap-2">
                 {data.records.map((record) => (
-                  <View key={record.date} className="flex-row items-center justify-between py-2 border-b border-slate-50">
-                    <Text className="text-sm font-medium text-slate-800">
+                  <View key={record.date} className="flex-row items-center justify-between py-2 border-b border-border">
+                    <Text className="text-sm font-medium text-foreground">
                       {format(new Date(record.date), 'EEE, dd MMM yyyy')}
                     </Text>
                     <Badge

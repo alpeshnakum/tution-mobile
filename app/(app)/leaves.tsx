@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useAuthStore } from '@/lib/auth-store';
 import { useLeaves } from '@/hooks/use-leaves';
-import { Loading } from '@/components/shared/loading';
 import { ErrorView } from '@/components/shared/error-view';
+import { SkeletonList } from '@/components/shared/skeleton';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScreenHeader } from '@/components/shared/screen-header';
@@ -43,11 +43,18 @@ export default function LeavesScreen() {
     ]);
   };
 
-  if (loading && !data.length) return <Loading fullScreen message="Loading leaves..." />;
+  if (loading && !data.length) return (
+    <SafeAreaView className="flex-1 bg-background">
+      <ScreenHeader title="Leave Requests" />
+      <View className="px-4 py-4">
+        <SkeletonList count={4} />
+      </View>
+    </SafeAreaView>
+  );
   if (error && !data.length) return <ErrorView message={error} onRetry={refetch} />;
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Leave Requests" />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -61,10 +68,10 @@ export default function LeavesScreen() {
               activeOpacity={0.7}
             >
               <View>
-                <Text className="text-base font-semibold text-slate-900">Apply for Leave</Text>
-                <Text className="text-xs text-slate-500 mt-0.5">Submit a new leave request</Text>
+                <Text className="text-base font-semibold text-foreground">Apply for Leave</Text>
+                <Text className="text-xs text-muted-foreground mt-0.5">Submit a new leave request</Text>
               </View>
-              <View className="bg-indigo-500 px-4 py-2 rounded-xl">
+              <View className="bg-primary px-4 py-2 rounded-xl">
                 <Text className="text-white text-sm font-semibold">Apply</Text>
               </View>
             </TouchableOpacity>
@@ -73,31 +80,31 @@ export default function LeavesScreen() {
           {data.length === 0 ? (
             <View className="py-12 items-center gap-3">
               <Text className="text-4xl">📋</Text>
-              <Text className="text-slate-500 text-sm">No leave requests yet</Text>
+              <Text className="text-muted-foreground text-sm">No leave requests yet</Text>
             </View>
           ) : (
             data.map((leave) => (
               <Card key={leave._id}>
                 <View className="flex-row items-start justify-between mb-2">
                   <View className="flex-1">
-                    <Text className="text-sm font-semibold text-slate-900 capitalize">{leave.leaveType} Leave</Text>
-                    <Text className="text-xs text-slate-500 mt-0.5">
+                    <Text className="text-sm font-semibold text-foreground capitalize">{leave.leaveType} Leave</Text>
+                    <Text className="text-xs text-muted-foreground mt-0.5">
                       {format(new Date(leave.fromDate), 'dd MMM yyyy')} – {format(new Date(leave.toDate), 'dd MMM yyyy')}
                       {' '}({leave.totalDays} day{leave.totalDays !== 1 ? 's' : ''})
                     </Text>
                   </View>
                   <Badge label={leave.status} variant={statusVariant[leave.status] || 'default'} />
                 </View>
-                <Text className="text-xs text-slate-600">{leave.reason}</Text>
+                <Text className="text-xs text-muted-foreground">{leave.reason}</Text>
                 {leave.reviewNotes && (
-                  <Text className="text-xs text-slate-500 mt-1 italic">Note: {leave.reviewNotes}</Text>
+                  <Text className="text-xs text-muted-foreground mt-1 italic">Note: {leave.reviewNotes}</Text>
                 )}
                 {leave.status === 'pending' && (
                   <TouchableOpacity
                     onPress={() => handleCancel(leave._id)}
-                    className="mt-3 py-2 border border-red-200 rounded-xl items-center"
+                    className="mt-3 py-2 border border-danger rounded-xl items-center"
                   >
-                    <Text className="text-xs font-semibold text-red-500">Cancel Request</Text>
+                    <Text className="text-xs font-semibold text-danger">Cancel Request</Text>
                   </TouchableOpacity>
                 )}
               </Card>

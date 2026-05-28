@@ -14,7 +14,7 @@ export default function RootLayout() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-slate-50">
+      <View className="flex-1 bg-background">
         <Loading fullScreen message="Loading..." />
       </View>
     );

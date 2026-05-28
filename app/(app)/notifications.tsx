@@ -2,8 +2,8 @@ import { ScrollView, View, Text, RefreshControl, TouchableOpacity, Alert } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useNotifications } from '@/hooks/use-notifications';
-import { Loading } from '@/components/shared/loading';
 import { ErrorView } from '@/components/shared/error-view';
+import { SkeletonList } from '@/components/shared/skeleton';
 import { Card } from '@/components/ui/card';
 import { ScreenHeader } from '@/components/shared/screen-header';
 import { format } from 'date-fns';
@@ -39,22 +39,22 @@ function NotificationCard({
     >
       <Card>
         <View className="flex-row gap-3">
-          <View className={`w-10 h-10 rounded-full items-center justify-center ${isUnread ? 'bg-indigo-50' : 'bg-slate-50'}`}>
+          <View className={`w-10 h-10 rounded-full items-center justify-center ${isUnread ? 'bg-primary-light' : 'bg-background'}`}>
             <Text className="text-xl">{config.emoji}</Text>
           </View>
           <View className="flex-1 gap-1">
             <View className="flex-row items-start justify-between gap-2">
-              <Text className={`flex-1 text-sm leading-5 ${isUnread ? 'font-semibold text-slate-900' : 'font-medium text-slate-700'}`}>
+              <Text className={`flex-1 text-sm leading-5 ${isUnread ? 'font-semibold text-foreground' : 'font-medium text-foreground'}`}>
                 {item.title}
               </Text>
               {isUnread && (
-                <View className="w-2 h-2 rounded-full bg-indigo-500 mt-1.5" />
+                <View className="w-2 h-2 rounded-full bg-primary mt-1.5" />
               )}
             </View>
-            <Text className="text-xs text-slate-500 leading-4">{item.message}</Text>
+            <Text className="text-xs text-muted-foreground leading-4">{item.message}</Text>
             <View className="flex-row items-center justify-between mt-0.5">
-              <Text className="text-xs text-indigo-500">{config.label}</Text>
-              <Text className="text-xs text-slate-400">
+              <Text className="text-xs text-primary">{config.label}</Text>
+              <Text className="text-xs text-muted-foreground">
                 {format(new Date(item.createdAt), 'dd MMM, hh:mm a')}
               </Text>
             </View>
@@ -77,11 +77,18 @@ export default function NotificationsScreen() {
     }
   };
 
-  if (loading && !data.notifications.length) return <Loading fullScreen message="Loading notifications..." />;
+  if (loading && !data.notifications.length) return (
+    <SafeAreaView className="flex-1 bg-background">
+      <ScreenHeader title="Notifications" />
+      <View className="px-4 py-4">
+        <SkeletonList count={6} />
+      </View>
+    </SafeAreaView>
+  );
   if (error && !data.notifications.length) return <ErrorView message={error} onRetry={refetch} />;
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Notifications" />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -90,9 +97,9 @@ export default function NotificationsScreen() {
         <View className="px-4 py-4 gap-3">
           {data.unreadCount > 0 && (
             <View className="flex-row items-center justify-between px-1">
-              <Text className="text-xs text-slate-500">{data.unreadCount} unread</Text>
+              <Text className="text-xs text-muted-foreground">{data.unreadCount} unread</Text>
               <TouchableOpacity onPress={handleMarkAllRead} activeOpacity={0.7}>
-                <Text className="text-xs font-semibold text-indigo-600">Mark all read</Text>
+                <Text className="text-xs font-semibold text-primary">Mark all read</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -100,7 +107,7 @@ export default function NotificationsScreen() {
           {data.notifications.length === 0 ? (
             <View className="py-16 items-center gap-3">
               <Text className="text-4xl">🔔</Text>
-              <Text className="text-slate-500 text-base">No notifications yet</Text>
+              <Text className="text-muted-foreground text-base">No notifications yet</Text>
             </View>
           ) : (
             data.notifications.map((item) => (

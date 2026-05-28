@@ -8,15 +8,15 @@ interface InputProps extends TextInputProps {
 export function Input({ label, error, className, ...props }: InputProps) {
   return (
     <View className="gap-1.5">
-      {label && <Text className="text-sm font-medium text-slate-700">{label}</Text>}
+      {label && <Text className="text-sm font-medium text-foreground">{label}</Text>}
       <TextInput
-        className={`border rounded-xl px-4 py-3.5 text-base text-slate-900 bg-white ${
-          error ? 'border-red-400' : 'border-slate-200'
+        className={`border rounded-xl px-4 py-3.5 text-base text-foreground bg-white ${
+          error ? 'border-danger' : 'border-border'
         } ${className || ''}`}
-        placeholderTextColor="#94a3b8"
+        placeholderTextColor="#6B6862"
         {...props}
       />
-      {error && <Text className="text-xs text-red-500">{error}</Text>}
+      {error && <Text className="text-xs text-danger">{error}</Text>}
     </View>
   );
 }

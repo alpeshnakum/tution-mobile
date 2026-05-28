@@ -11,10 +11,10 @@ export function ErrorView({ message, onRetry }: ErrorViewProps) {
       <View className="w-14 h-14 bg-red-100 rounded-full items-center justify-center">
         <Text className="text-2xl">⚠️</Text>
       </View>
-      <Text className="text-slate-700 text-base font-medium text-center">{message}</Text>
+      <Text className="text-foreground text-base font-medium text-center">{message}</Text>
       {onRetry && (
         <TouchableOpacity
-          className="px-5 py-2.5 bg-indigo-500 rounded-xl active:opacity-80"
+          className="px-5 py-2.5 bg-primary rounded-xl active:opacity-80"
           onPress={onRetry}
         >
           <Text className="text-white font-semibold">Try Again</Text>

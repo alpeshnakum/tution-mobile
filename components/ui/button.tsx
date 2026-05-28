@@ -13,14 +13,14 @@ interface ButtonProps {
 export function Button({ onPress, title, variant = 'primary', loading, disabled, className }: ButtonProps) {
   const base = 'flex-row items-center justify-center rounded-xl px-6 py-3.5 active:opacity-80';
   const variants = {
-    primary: 'bg-indigo-500',
-    outline: 'border border-indigo-500 bg-transparent',
+    primary: 'bg-primary',
+    outline: 'border border-primary bg-transparent',
     ghost: 'bg-transparent',
   };
   const textVariants = {
     primary: 'text-white font-semibold text-base',
-    outline: 'text-indigo-500 font-semibold text-base',
-    ghost: 'text-indigo-500 font-medium text-base',
+    outline: 'text-primary font-semibold text-base',
+    ghost: 'text-primary font-medium text-base',
   };
 
   return (

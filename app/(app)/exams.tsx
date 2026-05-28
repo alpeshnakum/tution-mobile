@@ -22,14 +22,14 @@ const examTypeLabel: Record<string, string> = {
 const examTypeColor: Record<string, string> = {
   unit_test: 'bg-blue-50 text-blue-600',
   mid_term: 'bg-amber-50 text-amber-600',
-  final: 'bg-red-50 text-red-600',
-  practical: 'bg-green-50 text-green-600',
+  final: 'bg-danger-light text-danger',
+  practical: 'bg-success-light text-success',
   assignment: 'bg-purple-50 text-purple-600',
-  project: 'bg-indigo-50 text-indigo-600',
+  project: 'bg-primary-light text-primary',
 };
 
 function ExamCard({ exam }: { exam: ExamScheduleItem }) {
-  const typeColor = examTypeColor[exam.examType] ?? 'bg-slate-50 text-slate-600';
+  const typeColor = examTypeColor[exam.examType] ?? 'bg-primary-light text-muted-foreground';
   const typeLabel = examTypeLabel[exam.examType] ?? exam.examType;
 
   const dateStr = exam.examDate
@@ -44,9 +44,9 @@ function ExamCard({ exam }: { exam: ExamScheduleItem }) {
     <Card>
       <View className="flex-row items-start justify-between gap-2">
         <View className="flex-1 gap-1">
-          <Text className="text-sm font-semibold text-slate-900 leading-5">{exam.title}</Text>
+          <Text className="text-sm font-semibold text-foreground leading-5">{exam.title}</Text>
           {!exam.isMultiSubject && exam.subjectName && (
-            <Text className="text-xs text-slate-500">{exam.subjectName}</Text>
+            <Text className="text-xs text-muted-foreground">{exam.subjectName}</Text>
           )}
         </View>
         <View className={`px-2 py-0.5 rounded-full ${typeColor}`}>
@@ -54,14 +54,14 @@ function ExamCard({ exam }: { exam: ExamScheduleItem }) {
         </View>
       </View>
 
-      <View className="h-px bg-slate-100 my-2.5" />
+      <View className="h-px bg-border my-2.5" />
 
       {exam.isMultiSubject && exam.subjects.length > 0 ? (
         <View className="gap-1.5">
           {exam.subjects.map((s, idx) => (
             <View key={idx} className="flex-row items-center justify-between">
-              <Text className="text-xs text-slate-600 flex-1">{s.subjectName}</Text>
-              <Text className="text-xs text-slate-500">
+              <Text className="text-xs text-foreground flex-1">{s.subjectName}</Text>
+              <Text className="text-xs text-muted-foreground">
                 {s.examDate ? format(new Date(s.examDate), 'dd MMM') : 'TBD'} · {s.totalMarks}M
               </Text>
             </View>
@@ -70,20 +70,20 @@ function ExamCard({ exam }: { exam: ExamScheduleItem }) {
       ) : (
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center gap-3">
-            <Text className="text-xs text-slate-500">📅 {dateStr}</Text>
+            <Text className="text-xs text-muted-foreground">📅 {dateStr}</Text>
             {exam.startTime && (
-              <Text className="text-xs text-slate-500">⏰ {exam.startTime}</Text>
+              <Text className="text-xs text-muted-foreground">⏰ {exam.startTime}</Text>
             )}
           </View>
           {exam.totalMarks && (
-            <Text className="text-xs text-slate-500">{exam.totalMarks} marks</Text>
+            <Text className="text-xs text-muted-foreground">{exam.totalMarks} marks</Text>
           )}
         </View>
       )}
 
       {daysUntil !== null && daysUntil >= 0 && (
         <View className="mt-2">
-          <Text className={`text-xs font-medium ${daysUntil <= 3 ? 'text-red-500' : daysUntil <= 7 ? 'text-amber-500' : 'text-slate-400'}`}>
+          <Text className={`text-xs font-medium ${daysUntil <= 3 ? 'text-danger' : daysUntil <= 7 ? 'text-amber-500' : 'text-muted-foreground'}`}>
             {daysUntil === 0 ? 'Today' : daysUntil === 1 ? 'Tomorrow' : `In ${daysUntil} days`}
           </Text>
         </View>
@@ -101,11 +101,11 @@ export default function ExamsScreen() {
   if (error && !data) return <ErrorView message={error} onRetry={refetch} />;
 
   if (!studentId) return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Exam Schedule" />
       <View className="flex-1 items-center justify-center gap-3">
         <Text className="text-4xl">📝</Text>
-        <Text className="text-slate-500 text-base">No student selected</Text>
+        <Text className="text-muted-foreground text-base">No student selected</Text>
       </View>
     </SafeAreaView>
   );
@@ -113,7 +113,7 @@ export default function ExamsScreen() {
   const exams = data?.exams ?? [];
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Exam Schedule" subtitle={data?.session.displayName} />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -121,14 +121,14 @@ export default function ExamsScreen() {
       >
         <View className="px-4 py-4 gap-3">
           {/* Filter toggle */}
-          <View className="flex-row bg-slate-100 rounded-xl p-1 gap-1">
+          <View className="flex-row bg-primary-light rounded-xl p-1 gap-1">
             {(['upcoming', 'all'] as const).map((f) => (
               <TouchableOpacity
                 key={f}
                 className={`flex-1 py-2 rounded-lg items-center ${filter === f ? 'bg-white shadow-sm' : ''}`}
                 onPress={() => setFilter(f)}
               >
-                <Text className={`text-xs font-semibold ${filter === f ? 'text-slate-900' : 'text-slate-500'}`}>
+                <Text className={`text-xs font-semibold ${filter === f ? 'text-foreground' : 'text-muted-foreground'}`}>
                   {f === 'upcoming' ? 'Upcoming' : 'All Exams'}
                 </Text>
               </TouchableOpacity>
@@ -138,7 +138,7 @@ export default function ExamsScreen() {
           {exams.length === 0 ? (
             <View className="py-16 items-center gap-3">
               <Text className="text-4xl">📋</Text>
-              <Text className="text-slate-500 text-base">
+              <Text className="text-muted-foreground text-base">
                 {filter === 'upcoming' ? 'No upcoming exams' : 'No exams found'}
               </Text>
             </View>

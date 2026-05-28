@@ -33,34 +33,34 @@ export default function NotificationDetailScreen() {
   const isUnread = notification.status === 'pending' || notification.status === 'sent';
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Notification" showBack />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-4 py-6 gap-5">
           <View className="items-center gap-3">
-            <View className="w-16 h-16 rounded-full bg-indigo-50 items-center justify-center">
+            <View className="w-16 h-16 rounded-full bg-primary-light items-center justify-center">
               <Text className="text-3xl">{config.emoji}</Text>
             </View>
-            <Text className="text-lg font-semibold text-slate-900 text-center leading-6">
+            <Text className="text-lg font-semibold text-foreground text-center leading-6">
               {notification.title}
             </Text>
             <Badge label={config.label} variant="primary" />
           </View>
 
           <Card>
-            <Text className="text-sm text-slate-700 leading-6">{notification.message}</Text>
+            <Text className="text-sm text-foreground leading-6">{notification.message}</Text>
           </Card>
 
           <Card>
             <View className="gap-3">
               <View className="flex-row items-center justify-between">
-                <Text className="text-xs font-medium text-slate-500">Received</Text>
-                <Text className="text-xs text-slate-700">
+                <Text className="text-xs font-medium text-muted-foreground">Received</Text>
+                <Text className="text-xs text-foreground">
                   {format(new Date(notification.createdAt), 'dd MMM yyyy, hh:mm a')}
                 </Text>
               </View>
               <View className="flex-row items-center justify-between">
-                <Text className="text-xs font-medium text-slate-500">Status</Text>
+                <Text className="text-xs font-medium text-muted-foreground">Status</Text>
                 <Badge
                   label={isUnread ? 'Unread' : 'Read'}
                   variant={isUnread ? 'warning' : 'success'}
@@ -68,8 +68,8 @@ export default function NotificationDetailScreen() {
               </View>
               {notification.readAt && (
                 <View className="flex-row items-center justify-between">
-                  <Text className="text-xs font-medium text-slate-500">Read at</Text>
-                  <Text className="text-xs text-slate-700">
+                  <Text className="text-xs font-medium text-muted-foreground">Read at</Text>
+                  <Text className="text-xs text-foreground">
                     {format(new Date(notification.readAt), 'dd MMM yyyy, hh:mm a')}
                   </Text>
                 </View>

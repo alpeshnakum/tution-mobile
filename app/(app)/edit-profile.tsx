@@ -56,7 +56,7 @@ export default function EditProfileScreen() {
       className="flex-1"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <SafeAreaView className="flex-1 bg-slate-50">
+      <SafeAreaView className="flex-1 bg-background">
         <ScreenHeader title="Edit Profile" showBack />
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -95,7 +95,7 @@ export default function EditProfileScreen() {
             />
 
             {error ? (
-              <Text className="text-sm text-red-500 text-center">{error}</Text>
+              <Text className="text-sm text-danger text-center">{error}</Text>
             ) : null}
 
             <Button title="Save Changes" onPress={handleSave} loading={loading} />

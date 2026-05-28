@@ -36,7 +36,7 @@ export default function ChangePasswordScreen() {
 
   return (
     <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <SafeAreaView className="flex-1 bg-slate-50">
+      <SafeAreaView className="flex-1 bg-background">
         <ScreenHeader title="Change Password" showBack />
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View className="px-6 pt-6 gap-4">
@@ -61,7 +61,7 @@ export default function ChangePasswordScreen() {
               onChangeText={setConfirmPassword}
               secureTextEntry
             />
-            {error && <Text className="text-sm text-red-500 text-center">{error}</Text>}
+            {error && <Text className="text-sm text-danger text-center">{error}</Text>}
             <Button title="Change Password" onPress={handleChange} loading={loading} />
           </View>
         </ScrollView>

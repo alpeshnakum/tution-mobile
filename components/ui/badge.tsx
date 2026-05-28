@@ -8,11 +8,11 @@ interface BadgeProps {
 }
 
 const variants: Record<BadgeVariant, { container: string; text: string }> = {
-  success: { container: 'bg-green-100', text: 'text-green-700' },
-  warning: { container: 'bg-amber-100', text: 'text-amber-700' },
-  danger: { container: 'bg-red-100', text: 'text-red-700' },
-  primary: { container: 'bg-indigo-100', text: 'text-indigo-700' },
-  default: { container: 'bg-slate-100', text: 'text-slate-600' },
+  success: { container: 'bg-success-light', text: 'text-success' },
+  warning: { container: 'bg-warning-light', text: 'text-warning' },
+  danger: { container: 'bg-danger-light', text: 'text-danger' },
+  primary: { container: 'bg-primary-light', text: 'text-primary' },
+  default: { container: 'bg-primary-light', text: 'text-muted-foreground' },
 };
 
 export function Badge({ label, variant = 'default' }: BadgeProps) {

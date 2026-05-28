@@ -64,20 +64,20 @@ export default function ApplyLeaveScreen() {
       className="flex-1"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <SafeAreaView className="flex-1 bg-slate-50">
+      <SafeAreaView className="flex-1 bg-background">
         <ScreenHeader title="Apply for Leave" showBack />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View className="px-4 py-4 gap-4">
             <Card>
-              <Text className="text-sm font-medium text-slate-700 mb-2">Leave Type</Text>
+              <Text className="text-sm font-medium text-foreground mb-2">Leave Type</Text>
               <View className="flex-row flex-wrap gap-2">
                 {LEAVE_TYPES.map((type) => (
                   <TouchableOpacity
                     key={type}
                     onPress={() => setLeaveType(type)}
-                    className={`px-4 py-2 rounded-xl border ${leaveType === type ? 'bg-indigo-500 border-indigo-500' : 'bg-white border-slate-200'}`}
+                    className={`px-4 py-2 rounded-xl border ${leaveType === type ? 'bg-primary border-primary' : 'bg-white border-border'}`}
                   >
-                    <Text className={`text-sm font-semibold capitalize ${leaveType === type ? 'text-white' : 'text-slate-700'}`}>{type}</Text>
+                    <Text className={`text-sm font-semibold capitalize ${leaveType === type ? 'text-white' : 'text-foreground'}`}>{type}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -86,21 +86,21 @@ export default function ApplyLeaveScreen() {
             <Card>
               <View className="flex-row gap-3">
                 <View className="flex-1 gap-1.5">
-                  <Text className="text-sm font-medium text-slate-700">From Date</Text>
+                  <Text className="text-sm font-medium text-foreground">From Date</Text>
                   <TextInput
-                    className="border border-slate-200 rounded-xl px-3 py-3 text-sm text-slate-900 bg-white"
+                    className="border border-border rounded-xl px-3 py-3 text-sm text-foreground bg-white"
                     placeholder="YYYY-MM-DD"
-                    placeholderTextColor="#94a3b8"
+                    placeholderTextColor="#6B6862"
                     value={fromDate}
                     onChangeText={setFromDate}
                   />
                 </View>
                 <View className="flex-1 gap-1.5">
-                  <Text className="text-sm font-medium text-slate-700">To Date</Text>
+                  <Text className="text-sm font-medium text-foreground">To Date</Text>
                   <TextInput
-                    className="border border-slate-200 rounded-xl px-3 py-3 text-sm text-slate-900 bg-white"
+                    className="border border-border rounded-xl px-3 py-3 text-sm text-foreground bg-white"
                     placeholder="YYYY-MM-DD"
-                    placeholderTextColor="#94a3b8"
+                    placeholderTextColor="#6B6862"
                     value={toDate}
                     onChangeText={setToDate}
                   />
@@ -109,11 +109,11 @@ export default function ApplyLeaveScreen() {
             </Card>
 
             <Card>
-              <Text className="text-sm font-medium text-slate-700 mb-1.5">Reason</Text>
+              <Text className="text-sm font-medium text-foreground mb-1.5">Reason</Text>
               <TextInput
-                className="border border-slate-200 rounded-xl px-3 py-3 text-sm text-slate-900 bg-white"
+                className="border border-border rounded-xl px-3 py-3 text-sm text-foreground bg-white"
                 placeholder="Describe the reason for leave (min. 10 characters)"
-                placeholderTextColor="#94a3b8"
+                placeholderTextColor="#6B6862"
                 value={reason}
                 onChangeText={setReason}
                 multiline
@@ -122,7 +122,7 @@ export default function ApplyLeaveScreen() {
               />
             </Card>
 
-            {error && <Text className="text-red-500 text-sm">{error}</Text>}
+            {error && <Text className="text-danger text-sm">{error}</Text>}
 
             <Button title="Submit Leave Request" onPress={handleSubmit} loading={submitting} />
           </View>

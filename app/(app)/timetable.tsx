@@ -29,11 +29,11 @@ export default function TimetableScreen() {
   if (loading && !data.length) return <Loading fullScreen message="Loading timetable..." />;
   if (error && !data.length) return <ErrorView message={error} onRetry={refetch} />;
   if (!studentClassId || !studentSessionId) return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Timetable" showBack />
       <View className="flex-1 items-center justify-center gap-3">
         <Text className="text-4xl">📅</Text>
-        <Text className="text-slate-500 text-base">No class or session assigned</Text>
+        <Text className="text-muted-foreground text-base">No class or session assigned</Text>
       </View>
     </SafeAreaView>
   );
@@ -43,11 +43,11 @@ export default function TimetableScreen() {
   }, [data, selectedDay]);
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-background">
       <ScreenHeader title="Timetable" showBack />
 
       {/* Day tabs */}
-      <View className="bg-white border-b border-slate-100 px-2 py-2">
+      <View className="bg-white border-b border-border px-2 py-2">
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View className="flex-row gap-1.5 px-2">
             {DAYS.map((day) => {
@@ -57,9 +57,9 @@ export default function TimetableScreen() {
                 <TouchableOpacity
                   key={day}
                   onPress={() => setSelectedDay(day)}
-                  className={`px-3.5 py-2 rounded-xl ${isSelected ? 'bg-indigo-500' : isToday ? 'bg-indigo-50' : 'bg-slate-50'}`}
+                  className={`px-3.5 py-2 rounded-xl ${isSelected ? 'bg-primary' : isToday ? 'bg-primary-light' : 'bg-background'}`}
                 >
-                  <Text className={`text-xs font-semibold ${isSelected ? 'text-white' : isToday ? 'text-indigo-600' : 'text-slate-600'}`}>
+                  <Text className={`text-xs font-semibold ${isSelected ? 'text-white' : isToday ? 'text-primary' : 'text-muted-foreground'}`}>
                     {DAY_SHORT[day]}
                   </Text>
                 </TouchableOpacity>
@@ -77,24 +77,24 @@ export default function TimetableScreen() {
           {todaySchedule.length === 0 ? (
             <View className="py-16 items-center gap-3">
               <Text className="text-4xl">🏖️</Text>
-              <Text className="text-slate-500 text-base">No classes scheduled</Text>
+              <Text className="text-muted-foreground text-base">No classes scheduled</Text>
             </View>
           ) : (
             todaySchedule.map((period) => (
               <Card key={period.periodNumber}>
                 <View className="flex-row items-center gap-4">
-                  <View className="w-10 h-10 bg-indigo-100 rounded-xl items-center justify-center">
-                    <Text className="text-sm font-bold text-indigo-600">{period.periodNumber}</Text>
+                  <View className="w-10 h-10 bg-primary-light rounded-xl items-center justify-center">
+                    <Text className="text-sm font-bold text-primary">{period.periodNumber}</Text>
                   </View>
                   <View className="flex-1">
-                    <Text className="text-sm font-semibold text-slate-900">{period.subject}</Text>
+                    <Text className="text-sm font-semibold text-foreground">{period.subject}</Text>
                     {period.teacherName ? (
-                      <Text className="text-xs text-slate-500 mt-0.5">{period.teacherName}</Text>
+                      <Text className="text-xs text-muted-foreground mt-0.5">{period.teacherName}</Text>
                     ) : null}
                   </View>
                   <View className="items-end">
-                    <Text className="text-xs font-medium text-slate-700">{period.startTime}</Text>
-                    <Text className="text-xs text-slate-400">–{period.endTime}</Text>
+                    <Text className="text-xs font-medium text-foreground">{period.startTime}</Text>
+                    <Text className="text-xs text-muted-foreground">–{period.endTime}</Text>
                   </View>
                 </View>
               </Card>
